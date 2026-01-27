@@ -220,11 +220,37 @@ export class ApexShowcaseComponent implements OnDestroy {
         // 10. Pie Chart - File Type Distribution
         this.pieOptions = {
             series: [44, 55, 13, 43, 22],
-            chart: { width: 380, type: 'pie', background: 'transparent' },
+            chart: {
+                width: 380,
+                type: 'pie',
+                background: 'transparent',
+                // Neumorphic Depth Shadow
+                dropShadow: {
+                    enabled: true,
+                    enabledOnSeries: undefined,
+                    top: 5,
+                    left: 5,
+                    blur: 5,
+                    color: colors.isDark ? '#000' : '#000',
+                    opacity: 0.2
+                }
+            },
             labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
             colors: colors.chartColors,
             legend: { labels: { colors: colors.text } },
-            dataLabels: { enabled: true, style: { colors: ['#fff'] } },
+            dataLabels: {
+                enabled: true,
+                style: { colors: ['#fff'] },
+                dropShadow: { enabled: true, top: 1, left: 1, blur: 1, color: '#000', opacity: 0.45 }
+            },
+            stroke: {
+                show: true,
+                curve: 'smooth',
+                lineCap: 'round',
+                colors: [colors.background], // Stroke matches background for separation
+                width: 3,
+                dashArray: 0
+            },
             responsive: [{
                 breakpoint: 480,
                 options: { chart: { width: 200 }, legend: { position: 'bottom' } }
