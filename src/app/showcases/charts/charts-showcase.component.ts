@@ -81,8 +81,17 @@ export class ChartsShowcaseComponent implements OnInit, OnDestroy {
                     name: 'CPU',
                     type: 'line',
                     smooth: true,
+                    symbol: 'none', // Cleaner look for neumorphism
+                    lineStyle: {
+                        width: isNeumorphic ? 5 : 3, // Thicker lines
+                        shadowBlur: isNeumorphic ? 10 : 0,
+                        shadowOffsetY: isNeumorphic ? 5 : 0,
+                        shadowColor: isNeumorphic ? 'rgba(0,0,0,0.2)' : 'transparent',
+                        color: colors.chartColors[0]
+                    },
                     itemStyle: { color: colors.chartColors[0] },
                     areaStyle: {
+                        opacity: isNeumorphic ? 0.1 : 0.5, // Subtle fill
                         color: {
                             type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
                             colorStops: [{ offset: 0, color: colors.chartColors[0] }, { offset: 1, color: 'rgba(0,0,0,0)' }]
@@ -94,8 +103,17 @@ export class ChartsShowcaseComponent implements OnInit, OnDestroy {
                     name: 'Memory',
                     type: 'line',
                     smooth: true,
+                    symbol: 'none',
+                    lineStyle: {
+                        width: isNeumorphic ? 5 : 3,
+                        shadowBlur: isNeumorphic ? 10 : 0,
+                        shadowOffsetY: isNeumorphic ? 5 : 0,
+                        shadowColor: isNeumorphic ? 'rgba(0,0,0,0.2)' : 'transparent',
+                        color: colors.chartColors[1]
+                    },
                     itemStyle: { color: colors.chartColors[1] },
                     areaStyle: {
+                        opacity: isNeumorphic ? 0.1 : 0.5,
                         color: {
                             type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
                             colorStops: [{ offset: 0, color: colors.chartColors[1] }, { offset: 1, color: 'rgba(0,0,0,0)' }]
@@ -106,7 +124,42 @@ export class ChartsShowcaseComponent implements OnInit, OnDestroy {
             ]
         };
 
-        // 3. Pie Chart - Traffic Distribution (TARGET FIX)
+        // 2. Bar Chart
+        this.barChartOption = {
+            backgroundColor: bgColor,
+            tooltip: { trigger: 'axis', textStyle: { color: textColor }, backgroundColor: colors.isDark ? 'rgba(20,25,35,0.9)' : 'rgba(255,255,255,0.9)' },
+            legend: { textStyle: { color: textColor } },
+            xAxis: { type: 'value', axisLabel: { color: textColor }, splitLine: { lineStyle: { color: splitLineColor } } },
+            yAxis: { type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], axisLabel: { color: textColor } },
+            series: [
+                {
+                    name: '2023', type: 'bar', data: [120, 200, 150, 80, 70],
+                    itemStyle: {
+                        color: colors.chartColors[0],
+                        borderRadius: [0, 10, 10, 0], // Rounded ends
+                        shadowBlur: isNeumorphic ? 6 : 0,
+                        shadowOffsetX: isNeumorphic ? 3 : 0,
+                        shadowOffsetY: isNeumorphic ? 3 : 0,
+                        shadowColor: isNeumorphic ? 'rgba(0,0,0,0.2)' : 'transparent'
+                    },
+                    barWidth: isNeumorphic ? '40%' : 'auto' // Thicker bars
+                },
+                {
+                    name: '2024', type: 'bar', data: [160, 240, 180, 110, 95],
+                    itemStyle: {
+                        color: colors.chartColors[1],
+                        borderRadius: [0, 10, 10, 0],
+                        shadowBlur: isNeumorphic ? 6 : 0,
+                        shadowOffsetX: isNeumorphic ? 3 : 0,
+                        shadowOffsetY: isNeumorphic ? 3 : 0,
+                        shadowColor: isNeumorphic ? 'rgba(0,0,0,0.2)' : 'transparent'
+                    },
+                    barWidth: isNeumorphic ? '40%' : 'auto'
+                }
+            ]
+        };
+
+        // 3. Pie Chart - Traffic Distribution
         this.pieChartOption = {
             backgroundColor: bgColor,
             tooltip: {
@@ -183,24 +236,6 @@ export class ChartsShowcaseComponent implements OnInit, OnDestroy {
                         { value: 300, name: 'Video Ads', itemStyle: { color: colors.chartColors[4] } }
                     ],
                     z: 2
-                }]
-        };
-
-        // 2. Bar Chart
-        this.barChartOption = {
-            backgroundColor: bgColor,
-            tooltip: { trigger: 'axis', textStyle: { color: textColor }, backgroundColor: colors.isDark ? 'rgba(20,25,35,0.9)' : 'rgba(255,255,255,0.9)' },
-            legend: { textStyle: { color: textColor } },
-            xAxis: { type: 'value', axisLabel: { color: textColor }, splitLine: { lineStyle: { color: splitLineColor } } },
-            yAxis: { type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], axisLabel: { color: textColor } },
-            series: [
-                {
-                    name: '2023', type: 'bar', data: [120, 200, 150, 80, 70],
-                    itemStyle: { color: colors.chartColors[0], borderRadius: [0, 4, 4, 0] }
-                },
-                {
-                    name: '2024', type: 'bar', data: [160, 240, 180, 110, 95],
-                    itemStyle: { color: colors.chartColors[1], borderRadius: [0, 4, 4, 0] }
                 }
             ]
         };
