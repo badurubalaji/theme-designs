@@ -1,106 +1,42 @@
 // ============================================================================
-// FUTURISTIC THEME - Cyber-Minimalist Design
+// FUTURISTIC THEME - "Cyberpunk" (Radical Redesign)
 // ============================================================================
-// Dark-first theme with Electric Cyan accents and glassmorphism effects
-// GPU-optimized animations with accessibility support
+// Usage: Import this file directly in your angular.json or styles.scss
+// @import 'themes/futuristic';
 // ============================================================================
 
 @use '@angular/material' as mat;
 @use 'palettes' as palettes;
-@use 'tokens' as tokens;
-@use 'elevation' as elevation;
 
 // =============================================================================
-// Futuristic Design Tokens
+// Futuristic Custom Variables
 // =============================================================================
 
 :root {
-    // Theme identification
     --theme-name: 'futuristic';
-    --theme-style: 'cyber-minimalist';
 
-    /* =========================================
-       COLOR SYSTEM (OKLCH / HSL Hybrid)
-       Dark-first, high contrast, semantic.
-       ========================================= */
+    // COLORS - NEON
+    --neon-cyan: #00f3ff;
+    --neon-pink: #ff00ff;
+    --deep-void: #050a10;
+    --tech-surface: #0a1018;
 
-    // CORE HUES
-    --hue-void: 220; // Deep blue-black (The Void)
-    --hue-prime: 190; // Electric Cyan (Primary)
-    --hue-danger: 340; // Neon Red
-    --hue-warn: 35; // Amber
-    --hue-success: 150; // Matrix Green
+    // GLOWS - AMPLIFIED
+    --glow-text: 0 0 5px rgba(0, 243, 255, 0.5);
+    --glow-box: 0 0 15px rgba(0, 243, 255, 0.3);
+    --glow-border: 0 0 10px rgba(0, 243, 255, 0.4);
+    --glow-strong: 0 0 25px rgba(0, 243, 255, 0.6);
 
-    // BASE LAYER (Backgrounds)
-    --color-bg-deep: hsl(var(--hue-void), 30%, 8%);
-    --color-bg-surface: hsl(var(--hue-void), 25%, 12%);
-    --color-bg-surface-2: hsl(var(--hue-void), 20%, 16%);
-    --color-bg-overlay: hsla(var(--hue-void), 30%, 8%, 0.85);
-
-    // ACCENTS
-    --color-primary: hsl(var(--hue-prime), 90%, 55%);
-    --color-primary-dim: hsl(var(--hue-prime), 60%, 45%);
-    --color-primary-glow: hsla(var(--hue-prime), 100%, 50%, 0.35);
-
-    // TEXT & STATUS
-    --color-text-prime: hsl(var(--hue-void), 10%, 96%); // White-ish
-    --color-text-sec: hsl(var(--hue-void), 10%, 70%); // Grey
-    --color-text-muted: hsl(var(--hue-void), 10%, 50%);
-
-    --color-danger: hsl(var(--hue-danger), 90%, 60%);
-    --color-success: hsl(var(--hue-success), 90%, 45%);
-    --color-warn: hsl(var(--hue-warn), 90%, 60%);
-
-    // SEMANTIC MAPPING (The Bridge)
-    --app-bg: var(--color-bg-deep);
-    --card-bg: var(--color-bg-surface);
-    --border-subtle: hsla(var(--hue-void), 10%, 80%, 0.1);
-    --border-focus: var(--color-primary);
-
-    /* =========================================
-       SPACING SCALE (8px grid)
-       ========================================= */
-    --space-2xs: 4px;
-    --space-xs: 8px;
-    --space-sm: 12px;
-    --space-md: 16px;
-    --space-lg: 24px;
-    --space-xl: 32px;
-    --space-2xl: 48px;
-    --container-max: 1440px;
-
-    /* =========================================
-       ELEVATION (Depth & Glow)
-       ========================================= */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
-    // The "Futuristic" Glow - only use sparingly
-    --shadow-glow: 0 0 15px var(--color-primary-glow);
-
-    // Glassmorphism tokens
-    --glass-bg: rgba(20, 25, 35, 0.6);
-    --glass-border: 1px solid rgba(255, 255, 255, 0.08);
-    --glass-blur: blur(12px);
-
-    /* =========================================
-       ANIMATION (Motion)
-       ========================================= */
-    --ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-    --duration-fast: 150ms;
-    --duration-norm: 300ms;
-
-    // Shape tokens (sharp corners for techy look)
-    --mat-shape-corner-xs: 4px;
+    // Shapes
+    --mat-shape-corner-xs: 2px;
     --mat-shape-corner-sm: 4px;
-    --mat-shape-corner-md: 6px;
-    --mat-shape-corner-lg: 8px;
-    --mat-shape-corner-xl: 12px;
-    --mat-shape-corner-full: 9999px;
+    --mat-shape-corner-md: 8px;
+    --mat-shape-corner-lg: 12px;
+    --mat-shape-corner-xl: 16px;
 }
 
 // =============================================================================
-// Theme Configuration (Dark Mode Default)
+// Theme Configuration
 // =============================================================================
 
 html {
@@ -112,710 +48,147 @@ html {
             density: 0,
         ));
 
-    // Override Material surfaces with dark void colors
-    --mat-sys-surface: var(--color-bg-surface);
-    --mat-sys-surface-container: var(--color-bg-surface-2);
-    --mat-sys-surface-container-low: var(--color-bg-surface);
-    --mat-sys-surface-container-high: hsl(var(--hue-void), 20%, 20%);
-    --mat-sys-surface-variant: hsl(var(--hue-void), 15%, 14%);
-    --mat-sys-on-surface: var(--color-text-prime);
-    --mat-sys-on-surface-variant: var(--color-text-sec);
-
-    // Primary color override
-    --mat-sys-primary: var(--color-primary);
-    --mat-sys-on-primary: #000000;
-
-    // Outlines
-    --mat-sys-outline: var(--border-subtle);
-    --mat-sys-outline-variant: var(--border-subtle);
-}
-
-// Light theme variant (lighter but still futuristic)
-html.light-theme,
-html[data-theme="light"] {
-    @include mat.theme((color: (theme-type: light,
-                primary: palettes.$teal-palette,
-                tertiary: palettes.$indigo-palette,
-            ),
-            typography: Roboto,
-            density: 0,
-        ));
-
-    // Light mode color adjustments (still dark but lighter)
-    --color-bg-deep: hsl(var(--hue-void), 15%, 92%);
-    --color-bg-surface: hsl(var(--hue-void), 10%, 96%);
-    --color-bg-surface-2: hsl(var(--hue-void), 8%, 98%);
-    --color-text-prime: hsl(var(--hue-void), 20%, 15%);
-    --color-text-sec: hsl(var(--hue-void), 15%, 40%);
-    --color-text-muted: hsl(var(--hue-void), 10%, 60%);
-    --border-subtle: hsla(var(--hue-void), 20%, 20%, 0.1);
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: 1px solid rgba(0, 0, 0, 0.08);
-
-    // Override Material surfaces for light mode
-    --mat-sys-surface: var(--color-bg-surface);
-    --mat-sys-surface-container: var(--color-bg-surface-2);
-    --mat-sys-surface-container-low: var(--color-bg-surface);
-    --mat-sys-surface-container-high: hsl(var(--hue-void), 8%, 94%);
-    --mat-sys-surface-variant: hsl(var(--hue-void), 8%, 90%);
-    --mat-sys-on-surface: var(--color-text-prime);
-    --mat-sys-on-surface-variant: var(--color-text-sec);
+    --mat-sys-surface: var(--tech-surface);
+    --mat-sys-surface-container: #0f1824;
+    --mat-sys-primary: var(--neon-cyan);
+    --mat-sys-on-primary: #000;
 }
 
 // =============================================================================
-// Base Styles
+// GLOBAL OVERRIDES
 // =============================================================================
 
-* {
-    box-sizing: border-box;
-}
-
-html,
 body {
-    height: 100%;
-    margin: 0;
-    background-color: var(--app-bg);
-    color: var(--color-text-prime);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.5;
+    background-color: var(--deep-void);
+    color: #e0e0e0;
+    font-family: 'Roboto Mono', monospace; // Tech vibe
 }
 
-// =============================================================================
-// Custom Scrollbars (Subtle & Dark)
-// =============================================================================
-
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--app-bg);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--color-bg-surface-2);
-    border-radius: 4px;
-
-    &:hover {
-        background: var(--color-primary-dim);
-    }
-}
-
-// =============================================================================
-// Typography
-// =============================================================================
-
+// HEADERS
 h1,
-.text-h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    color: var(--color-text-prime);
-}
-
 h2,
-.text-h2 {
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
-    font-weight: 600;
-    letter-spacing: -0.01em;
-}
-
 h3,
-.text-h3 {
-    font-size: clamp(1.25rem, 2vw, 1.75rem);
-    font-weight: 600;
-}
-
-.text-lg {
-    font-size: 1.125rem;
-}
-
-.text-base {
-    font-size: 1rem;
-}
-
-.text-sm {
-    font-size: 0.875rem;
-    color: var(--color-text-sec);
-}
-
-.text-xs {
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
+h4 {
+    text-shadow: var(--glow-text);
+    color: var(--neon-cyan);
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.font-mono {
-    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
 }
 
 // =============================================================================
-// Animations & Accessibility
+// COMPONENT OVERRIDES
 // =============================================================================
 
-@keyframes fade-in-up {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animate-fade-in {
-    animation: fade-in-up var(--duration-norm) var(--ease-smooth) forwards;
-}
-
-// Accessibility Guard (Crucial for Enterprise)
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-}
-
-// =============================================================================
-// Cards - Glassmorphism Effect
-// =============================================================================
-
+// CARDS - Glowing Panels
 .mat-mdc-card {
-    background: var(--glass-bg) !important;
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border: var(--glass-border) !important;
-    box-shadow: var(--shadow-md) !important;
-    transition: transform var(--duration-fast) var(--ease-smooth),
-        box-shadow var(--duration-fast) var(--ease-smooth);
+    background: rgba(10, 16, 24, 0.9) !important;
+    border: 1px solid var(--neon-cyan) !important;
+    box-shadow: var(--glow-box) !important;
+    backdrop-filter: blur(5px);
 
     &:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-glow) !important;
+        box-shadow: var(--glow-strong) !important;
+        border-color: #fff !important;
     }
 }
 
-// =============================================================================
-// Buttons - Techy squares with glow effects
-// =============================================================================
+// BUTTONS - Neon
+.mat-mdc-raised-button.mat-primary {
+    background: var(--neon-cyan) !important;
+    color: #000 !important;
+    box-shadow: var(--glow-strong) !important;
+    font-weight: bold;
 
-.mat-mdc-button,
-.mat-mdc-raised-button,
-.mat-mdc-flat-button,
-.mat-mdc-outlined-button,
-.mat-mdc-icon-button,
-.mat-mdc-fab,
-.mat-mdc-mini-fab {
-    border-radius: 4px !important;
-    letter-spacing: 0.05em;
-    font-weight: 600;
-    text-transform: uppercase;
-    transition: box-shadow var(--duration-fast) var(--ease-smooth);
-}
-
-// Primary Button Glow
-.mat-mdc-raised-button.mat-primary,
-.mat-mdc-fab.mat-primary,
-.mat-mdc-mini-fab.mat-primary {
-    --mdc-filled-button-container-color: var(--color-primary);
-    --mdc-filled-button-label-text-color: #000;
-    --mdc-fab-container-color: var(--color-primary);
-    --mdc-fab-label-text-color: #000;
-
-    &:not(:disabled):hover {
-        box-shadow: var(--shadow-glow) !important;
+    &:hover {
+        background: #fff !important;
+        box-shadow: 0 0 35px var(--neon-cyan) !important;
     }
 }
 
-// Outlined buttons
 .mat-mdc-outlined-button {
-    border-color: var(--border-subtle) !important;
+    border: 1px solid var(--neon-cyan) !important;
+    color: var(--neon-cyan) !important;
+    box-shadow: var(--glow-border);
 
     &:hover {
-        border-color: var(--color-primary) !important;
-        box-shadow: var(--shadow-glow) !important;
-        color: var(--color-primary) !important;
+        background: rgba(0, 243, 255, 0.1) !important;
+        box-shadow: var(--glow-strong) !important;
     }
 }
 
-// =============================================================================
-// Form Fields - Terminal Style (No grey fill, just borders)
-// =============================================================================
+// SIDENAV - Tech Rail
+.mat-sidenav {
+    background: var(--tech-surface) !important;
+    border-right: 1px solid var(--neon-cyan);
+    box-shadow: 5px 0 20px rgba(0, 243, 255, 0.1);
+}
 
+// FORM FIELDS - HUD Style
 .mat-mdc-form-field {
-    .mdc-text-field--filled {
-        background-color: transparent !important;
-        border: 1px solid var(--border-subtle);
+    .mdc-text-field {
+        background: rgba(0, 243, 255, 0.05) !important;
+        border: 1px solid var(--neon-cyan);
         border-radius: 4px;
-        transition: border-color 0.2s;
 
         &:hover {
-            border-color: var(--color-text-muted);
+            box-shadow: var(--glow-border);
         }
-    }
-
-    // Focused State
-    &.mat-focused {
-        .mdc-text-field--filled {
-            border-color: var(--color-primary) !important;
-            box-shadow: 0 0 8px var(--color-primary-glow);
-        }
-
-        .mat-mdc-floating-label {
-            color: var(--color-primary) !important;
-        }
-    }
-
-    // Remove the default underline ripple
-    .mdc-line-ripple {
-        display: none !important;
     }
 
     .mat-mdc-floating-label {
-        color: var(--color-text-sec) !important;
-    }
-}
-
-// Input fields
-.mat-mdc-input-element {
-    color: var(--color-text-prime) !important;
-    caret-color: var(--color-primary);
-}
-
-// =============================================================================
-// Chips - Rounded with primary variant
-// =============================================================================
-
-.mat-mdc-chip {
-    background-color: rgba(255, 255, 255, 0.05) !important;
-    color: var(--color-text-sec) !important;
-    border: 1px solid transparent !important;
-
-    &.mat-mdc-chip-selected,
-    &.mat-mdc-chip-highlighted {
-        background: hsla(var(--hue-prime), 100%, 50%, 0.1) !important;
-        color: var(--color-primary) !important;
-        border-color: hsla(var(--hue-prime), 100%, 50%, 0.2) !important;
-    }
-}
-
-// =============================================================================
-// Dialogs - Glassmorphism
-// =============================================================================
-
-.mat-mdc-dialog-container {
-    .mdc-dialog__surface {
-        background: var(--glass-bg) !important;
-        backdrop-filter: var(--glass-blur);
-        -webkit-backdrop-filter: var(--glass-blur);
-        border: var(--glass-border) !important;
-        box-shadow: var(--shadow-md) !important;
-        border-radius: 16px !important;
-    }
-}
-
-// =============================================================================
-// Menu & Select Panels
-// =============================================================================
-
-.mat-mdc-menu-panel {
-    background-color: var(--color-bg-surface) !important;
-    border: 1px solid var(--border-subtle);
-    box-shadow: var(--shadow-md);
-}
-
-.mat-mdc-select-panel {
-    background-color: var(--color-bg-surface) !important;
-    border: 1px solid var(--border-subtle);
-}
-
-.mat-mdc-autocomplete-panel {
-    background-color: var(--color-bg-surface) !important;
-    border: 1px solid var(--border-subtle);
-}
-
-// Menu items
-.mat-mdc-menu-item {
-    color: var(--color-text-prime);
-
-    &:hover {
-        background-color: var(--color-bg-surface-2) !important;
-    }
-}
-
-// =============================================================================
-// Snackbar
-// =============================================================================
-
-.mat-mdc-snack-bar-container {
-    --mdc-snackbar-container-color: var(--color-bg-surface-2);
-    border: 1px solid var(--border-subtle);
-    box-shadow: var(--shadow-md);
-}
-
-// =============================================================================
-// Tooltips
-// =============================================================================
-
-.mat-mdc-tooltip {
-    .mdc-tooltip__surface {
-        background-color: var(--color-bg-surface-2) !important;
-        border: 1px solid var(--border-subtle);
-        color: var(--color-text-prime);
-    }
-}
-
-// =============================================================================
-// Tabs
-// =============================================================================
-
-.mat-mdc-tab-header {
-    border: none !important;
-    background-color: var(--color-bg-surface);
-}
-
-.mat-mdc-tab {
-    color: var(--color-text-sec);
-
-    &.mdc-tab--active {
-        background-color: var(--color-bg-deep);
-        color: var(--color-primary);
+        color: var(--neon-cyan) !important;
     }
 
-    &:hover {
-        background-color: var(--color-bg-surface-2);
-    }
-}
-
-.mat-mdc-tab-body-wrapper {
-    background-color: var(--color-bg-deep);
-}
-
-// =============================================================================
-// Expansion Panels
-// =============================================================================
-
-.mat-expansion-panel {
-    background-color: var(--color-bg-surface) !important;
-    border: 1px solid var(--border-subtle) !important;
-    box-shadow: none !important;
-
-    &.mat-expanded {
-        background-color: var(--color-bg-deep) !important;
-        box-shadow: var(--shadow-md) !important;
-    }
-}
-
-.mat-expansion-panel-header {
-    background-color: var(--color-bg-surface) !important;
-    color: var(--color-text-prime);
-
-    &:hover {
-        background-color: var(--color-bg-surface-2) !important;
-    }
-}
-
-// =============================================================================
-// List
-// =============================================================================
-
-.mat-mdc-list {
-    .mat-mdc-list-item {
-        color: var(--color-text-prime);
-
-        &:hover {
-            background-color: var(--color-bg-surface);
-        }
-    }
-}
-
-.mat-mdc-nav-list {
-    .mat-mdc-list-item {
-        &.active {
-            background-color: hsla(var(--hue-prime), 100%, 50%, 0.1);
-            color: var(--color-primary);
-            border-left: 3px solid var(--color-primary);
-        }
-    }
-}
-
-// =============================================================================
-// Table
-// =============================================================================
-
-.mat-mdc-table {
-    background-color: var(--color-bg-deep);
-    border: 1px solid var(--border-subtle);
-
-    .mat-mdc-header-row {
-        background-color: var(--color-bg-surface) !important;
-    }
-
-    .mat-mdc-header-cell {
-        color: var(--color-text-prime);
-        font-weight: 600;
-        border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .mat-mdc-row {
-        border-bottom: 1px solid var(--border-subtle);
-
-        &:hover {
-            background-color: var(--color-bg-surface);
-        }
-    }
-
-    .mat-mdc-cell {
-        color: var(--color-text-prime);
-    }
-}
-
-// =============================================================================
-// Paginator
-// =============================================================================
-
-.mat-mdc-paginator {
-    background-color: var(--color-bg-surface);
-    border-top: 1px solid var(--border-subtle);
-    color: var(--color-text-prime);
-}
-
-// =============================================================================
-// Datepicker
-// =============================================================================
-
-.mat-datepicker-content {
-    background-color: var(--color-bg-surface) !important;
-    border: 1px solid var(--border-subtle);
-    box-shadow: var(--shadow-md);
-}
-
-.mat-calendar {
-    background-color: var(--color-bg-surface);
-    color: var(--color-text-prime);
-}
-
-.mat-calendar-body-cell-content {
-    &:hover {
-        background-color: var(--color-bg-surface-2);
-    }
-
-    &.mat-calendar-body-selected {
-        background-color: var(--color-primary);
-        color: #000;
-    }
-}
-
-// =============================================================================
-// Stepper
-// =============================================================================
-
-.mat-stepper-horizontal,
-.mat-stepper-vertical {
-    background-color: var(--color-bg-deep);
-}
-
-.mat-step-header {
-    background-color: var(--color-bg-surface);
-    border: 1px solid var(--border-subtle);
-
-    &:hover {
-        background-color: var(--color-bg-surface-2);
-    }
-}
-
-.mat-stepper-horizontal-line {
-    border-top-color: var(--border-subtle) !important;
-}
-
-// =============================================================================
-// Toolbar
-// =============================================================================
-
-.mat-toolbar {
-    background-color: var(--color-bg-deep);
-    color: var(--color-text-prime);
-    border-bottom: 1px solid var(--border-subtle);
-}
-
-// =============================================================================
-// Sidenav
-// =============================================================================
-
-.mat-sidenav {
-    background-color: var(--color-bg-surface);
-    border-right: 1px solid var(--border-subtle);
-}
-
-.mat-sidenav-content {
-    background-color: var(--app-bg);
-}
-
-// =============================================================================
-// Progress Bar & Spinner
-// =============================================================================
-
-.mat-mdc-progress-bar {
-    --mdc-linear-progress-active-indicator-color: var(--color-primary);
-    --mdc-linear-progress-track-color: var(--color-bg-surface-2);
-}
-
-.mat-mdc-progress-spinner {
-    --mdc-circular-progress-active-indicator-color: var(--color-primary);
-}
-
-// =============================================================================
-// Slide Toggle
-// =============================================================================
-
-.mat-mdc-slide-toggle {
-    .mdc-switch__track {
+    .mdc-notched-outline {
         border: none !important;
     }
 
-    &.mat-checked {
-        --mdc-switch-selected-track-color: var(--color-primary);
-        --mdc-switch-selected-hover-track-color: var(--color-primary-dim);
+    .mdc-line-ripple {
+        display: none;
     }
 }
 
-// =============================================================================
-// Radio & Checkbox
-// =============================================================================
+// DIALOG - Holo Screen
+.mat-mdc-dialog-container {
+    background: rgba(10, 16, 24, 0.95) !important;
+    border: 2px solid var(--neon-cyan) !important;
+    box-shadow: 0 0 50px rgba(0, 243, 255, 0.2) !important;
+}
 
-.mat-mdc-radio-button {
+// TABLE - Data Grid
+.mat-mdc-table {
+    background: transparent;
 
-    &.mat-accent,
-    &.mat-primary {
-        --mdc-radio-selected-icon-color: var(--color-primary);
-        --mdc-radio-selected-hover-icon-color: var(--color-primary-dim);
+    .mat-mdc-header-row {
+        background: rgba(0, 243, 255, 0.1);
+    }
+
+    .mat-mdc-row:hover {
+        background: rgba(0, 243, 255, 0.05);
+        box-shadow: inset 0 0 10px rgba(0, 243, 255, 0.2);
+    }
+
+    .mat-mdc-cell,
+    .mat-mdc-header-cell {
+        color: var(--neon-cyan);
+        border-bottom: 1px solid rgba(0, 243, 255, 0.2);
     }
 }
 
-.mat-mdc-checkbox {
-
-    &.mat-accent,
-    &.mat-primary {
-        --mdc-checkbox-selected-icon-color: var(--color-primary);
-        --mdc-checkbox-selected-hover-icon-color: var(--color-primary-dim);
-    }
+// TOOLBAR
+.mat-toolbar {
+    background: var(--deep-void);
+    border-bottom: 1px solid var(--neon-cyan);
+    box-shadow: var(--glow-box);
 }
 
-// =============================================================================
-// Slider
-// =============================================================================
-
-.mat-mdc-slider {
-    --mdc-slider-active-track-color: var(--color-primary);
-    --mdc-slider-handle-color: var(--color-primary);
-}
-
-// =============================================================================
-// Divider
-// =============================================================================
-
-.mat-divider {
-    border-top-color: var(--border-subtle) !important;
-}
-
-// =============================================================================
-// Badge
-// =============================================================================
-
-.mat-badge-content {
-    background-color: var(--color-primary);
-    color: #000;
-}
-
-// =============================================================================
-// Bottom Sheet
-// =============================================================================
-
-.mat-bottom-sheet-container {
-    background-color: var(--color-bg-surface) !important;
-    border-top: 1px solid var(--border-subtle);
-}
-
-// =============================================================================
-// Utility Classes
-// =============================================================================
-
+// UTILS
 .surface {
-    background-color: var(--color-bg-surface);
-}
-
-.surface-container {
-    background-color: var(--color-bg-surface-2);
+    background: var(--tech-surface);
 }
 
 .text-primary {
-    color: var(--color-primary) !important;
-}
-
-.bg-surface {
-    background-color: var(--color-bg-surface) !important;
-}
-
-.container {
-    width: 100%;
-    max-width: var(--container-max);
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: var(--space-md);
-    padding-right: var(--space-md);
-}
-
-// Component utility classes
-.card {
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border: var(--glass-border);
-    box-shadow: var(--shadow-md);
-    border-radius: 12px;
-    padding: var(--space-lg);
-}
-
-.tag {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px 12px;
-    border-radius: 99px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--color-text-sec);
-    border: 1px solid transparent;
-
-    &.tag-primary {
-        background: hsla(var(--hue-prime), 100%, 50%, 0.1);
-        color: var(--color-primary);
-        border-color: hsla(var(--hue-prime), 100%, 50%, 0.2);
-    }
-}
-
-.btn-ghost {
-    background: transparent;
-    color: var(--color-text-sec);
-    border: 1px solid var(--border-subtle);
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-
-    &:hover {
-        border-color: var(--color-primary);
-        color: var(--color-primary);
-        box-shadow: var(--shadow-glow);
-    }
+    color: var(--neon-cyan);
+    text-shadow: var(--glow-text);
 }
