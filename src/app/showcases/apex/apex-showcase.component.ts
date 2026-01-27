@@ -32,7 +32,7 @@ export class ApexShowcaseComponent implements OnDestroy {
     constructor(private snackBar: MatSnackBar, private themeService: ThemeService) {
         this.themeSubscription = this.themeService.activeTheme$.subscribe(theme => {
             const colors = this.themeService.getColors(theme);
-            this.updateCharts(colors);
+            this.updateCharts(colors, theme);
         });
     }
 
@@ -42,15 +42,43 @@ export class ApexShowcaseComponent implements OnDestroy {
         }
     }
 
-    updateCharts(colors: ThemeColors) {
+    updateCharts(colors: ThemeColors, theme: string) {
+        // Theme Flags
+        const isNeumorphic = theme === 'neumorphism';
+        const isGlass = theme === 'glassmorphism';
+        const isMinimal = theme === 'minimal';
+        const isFuturistic = theme === 'futuristic' || theme === 'legacy-dark';
+        const isCrystal = theme === 'crystal';
+
+        // Helper for Minimal Theme Colors
+        const getMinimalColor = (index: number) => {
+            const minChartColors = ['#000000', '#555555', '#999999', '#CCCCCC'];
+            return minChartColors[index % minChartColors.length];
+        };
+
+        const activeChartColors = isMinimal ? ['#000', '#444', '#888', '#aaa', '#ccc'] : colors.chartColors;
+        const activeText = isMinimal ? '#000' : colors.text;
+
         const commonOptions: Partial<ApexOptions> = {
             chart: {
                 type: 'line',
                 background: 'transparent',
-                toolbar: { show: false }
+                toolbar: { show: false },
+                // Futuristic Glow (Global)
+                dropShadow: isFuturistic ? {
+                    enabled: true,
+                    top: 0,
+                    left: 0,
+                    blur: 10,
+                    opacity: 0.5,
+                    color: colors.primary
+                } : { enabled: false }
             },
             theme: { mode: colors.isDark ? 'dark' : 'light' },
-            grid: { borderColor: colors.grid },
+            grid: {
+                borderColor: isMinimal ? 'transparent' : (isGlass ? 'rgba(255,255,255,0.05)' : colors.grid),
+                padding: { top: 0, right: 0, bottom: 0, left: 10 }
+            },
             dataLabels: { enabled: false }
         };
 
@@ -60,13 +88,14 @@ export class ApexShowcaseComponent implements OnDestroy {
             chart: { type: 'radialBar', height: 380, background: 'transparent' },
             plotOptions: {
                 radialBar: {
-                    track: { background: colors.isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
-                    dataLabels: { name: { show: false }, value: { show: false } }
+                    track: { background: isGlass ? 'rgba(255,255,255,0.1)' : (colors.isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)') },
+                    dataLabels: { name: { show: false }, value: { show: false } },
+                    hollow: { margin: isMinimal ? 5 : 15 } // Tighter for minimal
                 }
             },
-            colors: colors.chartColors.slice(0, 4),
+            colors: activeChartColors.slice(0, 4),
             labels: ['Vimeo', 'Messenger', 'Facebook', 'LinkedIn'],
-            legend: { show: true, floating: true, position: 'left', labels: { colors: colors.text } }
+            legend: { show: true, floating: true, position: 'left', labels: { colors: activeText } }
         };
 
         // 2. Candlestick
@@ -82,27 +111,35 @@ export class ApexShowcaseComponent implements OnDestroy {
                 ]
             }],
             chart: { type: 'candlestick', height: 350, background: 'transparent' },
-            xaxis: { type: 'datetime', labels: { style: { colors: colors.text } } },
-            yaxis: { tooltip: { enabled: true }, labels: { style: { colors: colors.text } } },
+            xaxis: { type: 'datetime', labels: { style: { colors: activeText } } },
+            yaxis: { tooltip: { enabled: true }, labels: { style: { colors: activeText } } },
             plotOptions: {
                 candlestick: {
-                    colors: { upward: colors.chartColors[2], downward: colors.chartColors[3] },
-                    wick: { useFillColor: true }
+                    colors: {
+                        upward: isMinimal ? '#000' : colors.chartColors[2],
+                        downward: isMinimal ? 'transparent' : colors.chartColors[3]
+                    },
+                    wick: { useFillColor: !isMinimal }
                 }
-            }
+            },
+            stroke: { width: isMinimal ? 1 : 2, colors: isMinimal ? ['#000'] : undefined }
         };
 
         // 3. Area (Spline)
         this.areaOptions = {
             ...commonOptions,
             series: [{ name: 'Net Profit', data: [31, 40, 28, 51, 42, 109, 100] }],
-            chart: { type: 'area', height: 350, background: 'transparent' },
-            stroke: { curve: 'smooth', width: 2 },
-            colors: [colors.primary],
-            fill: { type: 'gradient', gradient: { opacityFrom: 0.6, opacityTo: 0.1 } },
-            xaxis: { categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'], labels: { style: { colors: colors.text } } },
-            yaxis: { labels: { style: { colors: colors.text } } },
-            legend: { labels: { colors: colors.text } }
+            chart: { type: 'area', height: 350, background: 'transparent', dropShadow: commonOptions.chart?.dropShadow },
+            stroke: { curve: isMinimal ? 'straight' : 'smooth', width: 2, colors: [activeChartColors[0]] },
+            colors: [activeChartColors[0]],
+            fill: {
+                type: isMinimal ? 'solid' : 'gradient',
+                gradient: { opacityFrom: isGlass ? 0.5 : 0.6, opacityTo: 0.1 },
+                opacity: isMinimal ? 0.1 : 1
+            },
+            xaxis: { categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'], labels: { style: { colors: activeText } } },
+            yaxis: { labels: { style: { colors: activeText } } },
+            legend: { labels: { colors: activeText } }
         };
 
         // 4. Heatmap
@@ -118,17 +155,19 @@ export class ApexShowcaseComponent implements OnDestroy {
             chart: { type: 'heatmap', height: 350, background: 'transparent' },
             plotOptions: {
                 heatmap: {
-                    shadeIntensity: 0.5,
+                    shadeIntensity: isMinimal ? 0 : 0.5,
+                    radius: isNeumorphic ? 10 : (isCrystal ? 0 : 4),
+                    enableShades: !isMinimal,
                     colorScale: {
                         ranges: [
-                            { from: 0, to: 50, color: colors.chartColors[0], name: 'Low' },
-                            { from: 51, to: 100, color: colors.chartColors[2], name: 'High' }
+                            { from: 0, to: 50, color: isMinimal ? '#eee' : colors.chartColors[0], name: 'Low' },
+                            { from: 51, to: 100, color: isMinimal ? '#000' : colors.chartColors[2], name: 'High' }
                         ]
                     }
                 }
             },
-            xaxis: { labels: { style: { colors: colors.text } } },
-            yaxis: { labels: { style: { colors: colors.text } } }
+            xaxis: { labels: { style: { colors: activeText } } },
+            yaxis: { labels: { style: { colors: activeText } } }
         };
 
         // 5. Scatter
@@ -139,32 +178,40 @@ export class ApexShowcaseComponent implements OnDestroy {
                 { name: "Sample B", data: [[36.4, 13.4], [1.7, 11], [5.4, 8], [9, 17], [1.9, 4], [3.6, 12.2], [1.9, 14.4], [1.9, 9], [1.9, 13.2], [1.4, 7], [6.4, 8.8], [3.6, 4.3], [1.6, 10], [9.9, 2], [7.1, 15], [1.4, 0], [3.6, 13.7], [1.9, 15.2], [6.4, 16.5], [0.9, 10], [4.5, 17.1], [10.9, 10], [0.1, 14.7], [9, 10], [12.7, 11.8], [2.1, 10], [2.5, 10], [27.1, 10], [2.9, 11.5], [7.1, 10.8], [2.1, 12]] }
             ],
             chart: { type: 'scatter', height: 350, background: 'transparent', zoom: { enabled: true, type: 'xy' } },
-            xaxis: { tickAmount: 10, labels: { formatter: (val: any) => parseFloat(val).toFixed(1), style: { colors: colors.text } } },
-            yaxis: { tickAmount: 7, labels: { style: { colors: colors.text } } },
-            colors: [colors.secondary, colors.chartColors[4]]
+            xaxis: { tickAmount: 10, labels: { formatter: (val: any) => parseFloat(val).toFixed(1), style: { colors: activeText } } },
+            yaxis: { tickAmount: 7, labels: { style: { colors: activeText } } },
+            colors: isMinimal ? ['#555', '#000'] : [colors.secondary, colors.chartColors[4]],
+            markers: {
+                size: isMinimal ? 4 : 6,
+                strokeColors: isMinimal ? '#fff' : 'transparent',
+                shape: isCrystal ? 'square' : 'circle'
+            }
         };
 
-        // 6. Timeline (Range Bar) - Recovery Sessions
+        // 6. Timeline (Range Bar)
         this.timelineOptions = {
             ...commonOptions,
-            series: [
-                {
-                    data: [
-                        { x: 'Disk A Scan', y: [new Date('2023-01-01T08:00:00').getTime(), new Date('2023-01-01T10:30:00').getTime()] },
-                        { x: 'Partition Recovery', y: [new Date('2023-01-01T11:00:00').getTime(), new Date('2023-01-01T14:00:00').getTime()] },
-                        { x: 'File Extraction', y: [new Date('2023-01-01T13:00:00').getTime(), new Date('2023-01-01T16:00:00').getTime()] },
-                        { x: 'Integrity Check', y: [new Date('2023-01-01T16:30:00').getTime(), new Date('2023-01-01T18:00:00').getTime()] }
-                    ]
-                }
-            ],
+            series: [{
+                data: [
+                    { x: 'Disk A Scan', y: [new Date('2023-01-01T08:00:00').getTime(), new Date('2023-01-01T10:30:00').getTime()] },
+                    { x: 'Partition Recovery', y: [new Date('2023-01-01T11:00:00').getTime(), new Date('2023-01-01T14:00:00').getTime()] },
+                    { x: 'File Extraction', y: [new Date('2023-01-01T13:00:00').getTime(), new Date('2023-01-01T16:00:00').getTime()] },
+                    { x: 'Integrity Check', y: [new Date('2023-01-01T16:30:00').getTime(), new Date('2023-01-01T18:00:00').getTime()] }
+                ]
+            }],
             chart: { type: 'rangeBar', height: 350, background: 'transparent' },
-            plotOptions: { bar: { horizontal: true } },
-            xaxis: { type: 'datetime', labels: { style: { colors: colors.text } } },
-            yaxis: { labels: { style: { colors: colors.text } } },
-            colors: [colors.chartColors[0]]
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    borderRadius: isNeumorphic ? 8 : (isCrystal || isMinimal ? 0 : 4)
+                }
+            },
+            xaxis: { type: 'datetime', labels: { style: { colors: activeText } } },
+            yaxis: { labels: { style: { colors: activeText } } },
+            colors: [activeChartColors[0]]
         };
 
-        // 7. Bubble Chart - File Integrity Analysis
+        // 7. Bubble Chart
         this.bubbleOptions = {
             ...commonOptions,
             series: [
@@ -174,13 +221,13 @@ export class ApexShowcaseComponent implements OnDestroy {
             ],
             chart: { type: 'bubble', height: 350, background: 'transparent' },
             dataLabels: { enabled: false },
-            fill: { opacity: 0.8 },
-            xaxis: { tickAmount: 5, labels: { style: { colors: colors.text } }, title: { text: 'File Size (MB)', style: { color: colors.text } } },
-            yaxis: { max: 70, labels: { style: { colors: colors.text } }, title: { text: 'Risk Factor', style: { color: colors.text } } },
-            colors: [colors.chartColors[0], colors.chartColors[2], colors.chartColors[3]]
+            fill: { opacity: isGlass ? 0.6 : 0.8 },
+            xaxis: { tickAmount: 5, labels: { style: { colors: activeText } }, title: { text: 'File Size (MB)', style: { color: activeText } } },
+            yaxis: { max: 70, labels: { style: { colors: activeText } }, title: { text: 'Risk Factor', style: { color: activeText } } },
+            colors: activeChartColors.slice(0, 3)
         };
 
-        // 8. Mixed Chart - Recovery Speed vs Errors
+        // 8. Mixed Chart
         this.mixedOptions = {
             ...commonOptions,
             series: [
@@ -189,43 +236,49 @@ export class ApexShowcaseComponent implements OnDestroy {
                 { name: 'Overall Health', type: 'line', data: [80, 85, 90, 70, 85, 90, 95, 92, 75, 88, 85] }
             ],
             chart: { type: 'line', height: 350, stacked: false, background: 'transparent' },
-            stroke: { width: [0, 2, 5], curve: 'smooth' },
-            plotOptions: { bar: { columnWidth: '50%' } },
-            fill: { opacity: [0.85, 0.25, 1], gradient: { inverseColors: false, shade: 'light', type: 'vertical', opacityFrom: 0.85, opacityTo: 0.55, stops: [0, 100, 100, 100] } },
-            xaxis: { categories: ['10m', '20m', '30m', '40m', '50m', '60m', '70m', '80m', '90m', '100m', '110m'], labels: { style: { colors: colors.text } } },
+            stroke: { width: [0, 2, 5], curve: isMinimal ? 'straight' : 'smooth' },
+            plotOptions: { bar: { columnWidth: '50%', borderRadius: isNeumorphic ? 4 : 0 } },
+            fill: {
+                opacity: [0.85, 0.25, 1],
+                gradient: { inverseColors: false, shade: 'light', type: 'vertical', opacityFrom: 0.85, opacityTo: 0.55, stops: [0, 100, 100, 100] }
+            },
+            xaxis: { categories: ['10m', '20m', '30m', '40m', '50m', '60m', '70m', '80m', '90m', '100m', '110m'], labels: { style: { colors: activeText } } },
             yaxis: [
-                { seriesName: 'Transfer Speed', axisTicks: { show: true }, axisBorder: { show: true, color: colors.chartColors[0] }, labels: { style: { colors: colors.chartColors[0] } }, title: { text: 'Speed (MB/s)', style: { color: colors.chartColors[0] } } },
+                { seriesName: 'Transfer Speed', axisTicks: { show: true }, axisBorder: { show: true, color: activeChartColors[0] }, labels: { style: { colors: activeChartColors[0] } }, title: { text: 'Speed (MB/s)', style: { color: activeChartColors[0] } } },
                 { seriesName: 'Errors', show: false },
-                { opposite: true, seriesName: 'Overall Health', axisTicks: { show: true }, axisBorder: { show: true, color: colors.chartColors[2] }, labels: { style: { colors: colors.chartColors[2] } }, title: { text: 'Health Score', style: { color: colors.chartColors[2] } } }
+                { opposite: true, seriesName: 'Overall Health', axisTicks: { show: true }, axisBorder: { show: true, color: activeChartColors[2] }, labels: { style: { colors: activeChartColors[2] } }, title: { text: 'Health Score', style: { color: activeChartColors[2] } } }
             ],
-            colors: [colors.chartColors[0], colors.chartColors[3], colors.chartColors[2]]
+            colors: [activeChartColors[0], activeChartColors[3], activeChartColors[2]]
         };
 
-        // 9. Bar Chart - Weekly Recovered Files
+        // 9. Bar Chart
         this.barOptions = {
             ...commonOptions,
             series: [{ name: 'Net Profit', data: [44, 55, 57, 56, 61, 58, 63, 60, 66] }],
             chart: { type: 'bar', height: 350, background: 'transparent' },
             plotOptions: {
-                bar: { horizontal: false, columnWidth: '55%', borderRadius: 10 }
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    borderRadius: isNeumorphic ? 10 : (isCrystal || isMinimal ? 0 : 4)
+                }
             },
             dataLabels: { enabled: false },
             stroke: { show: true, width: 2, colors: ['transparent'] },
-            xaxis: { categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'], labels: { style: { colors: colors.text } } },
-            yaxis: { title: { text: '$ (thousands)' }, labels: { style: { colors: colors.text } } },
-            fill: { opacity: 1 },
-            colors: [colors.primary]
+            xaxis: { categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'], labels: { style: { colors: activeText } } },
+            yaxis: { title: { text: '$ (thousands)' }, labels: { style: { colors: activeText } } },
+            fill: { opacity: isGlass ? 0.7 : 1 },
+            colors: [activeChartColors[0]]
         };
 
-        // 10. Pie Chart - File Type Distribution
+        // 10. Pie Chart
         this.pieOptions = {
             series: [44, 55, 13, 43, 22],
             chart: {
                 width: 380,
                 type: 'pie',
                 background: 'transparent',
-                // Neumorphic Depth Shadow
-                dropShadow: {
+                dropShadow: isNeumorphic ? {
                     enabled: true,
                     enabledOnSeries: undefined,
                     top: 5,
@@ -233,23 +286,28 @@ export class ApexShowcaseComponent implements OnDestroy {
                     blur: 5,
                     color: colors.isDark ? '#000' : '#000',
                     opacity: 0.2
-                }
+                } : (isFuturistic ? {
+                    enabled: true,
+                    top: 0,
+                    left: 0,
+                    blur: 10,
+                    color: colors.primary
+                } : { enabled: false })
             },
             labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
-            colors: colors.chartColors,
-            legend: { labels: { colors: colors.text } },
+            colors: activeChartColors,
+            legend: { labels: { colors: activeText } },
             dataLabels: {
                 enabled: true,
-                style: { colors: ['#fff'] },
-                dropShadow: { enabled: true, top: 1, left: 1, blur: 1, color: '#000', opacity: 0.45 }
+                style: { colors: isMinimal ? ['#000'] : ['#fff'] },
+                dropShadow: isNeumorphic ? { enabled: true, top: 1, left: 1, blur: 1, color: '#000', opacity: 0.45 } : { enabled: false }
             },
             stroke: {
                 show: true,
                 curve: 'smooth',
                 lineCap: 'round',
-                colors: [colors.background], // Stroke matches background for separation
-                width: 3,
-                dashArray: 0
+                colors: isMinimal ? ['#fff'] : [colors.background],
+                width: isNeumorphic || isMinimal ? 3 : 0
             },
             responsive: [{
                 breakpoint: 480,
