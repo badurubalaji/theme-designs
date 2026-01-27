@@ -1,0 +1,13 @@
+@use '../autocomplete/autocomplete-showcase.component.scss' as base;
+
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.selected-value {
+    margin-top: 16px;
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 0.875rem;
+}

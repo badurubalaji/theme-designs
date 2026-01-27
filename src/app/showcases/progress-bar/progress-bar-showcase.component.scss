@@ -1,0 +1,17 @@
+@use '../autocomplete/autocomplete-showcase.component.scss' as base;
+
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    mat-progress-bar {
+        max-width: 400px;
+    }
+}
+
+.spinner-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}

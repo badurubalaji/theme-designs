@@ -1,0 +1,73 @@
+<div class="showcase-container">
+    <div class="showcase-header">
+        <h1>Tabs</h1>
+        <p class="description">Tabs organize content into separate views where only one view is visible at a time.
+            <a href="https://material.angular.dev/components/tabs" target="_blank">Official docs</a>
+        </p>
+    </div>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Basic Tabs</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <mat-tab-group>
+                    <mat-tab label="First">
+                        <div class="tab-content">Content for the first tab</div>
+                    </mat-tab>
+                    <mat-tab label="Second">
+                        <div class="tab-content">Content for the second tab</div>
+                    </mat-tab>
+                    <mat-tab label="Third">
+                        <div class="tab-content">Content for the third tab</div>
+                    </mat-tab>
+                    <mat-tab label="Disabled" disabled>
+                        <div class="tab-content">Disabled tab content</div>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['basic'], 'Basic')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Tabs with Icons</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <mat-tab-group>
+                    <mat-tab>
+                        <ng-template mat-tab-label><mat-icon>home</mat-icon> Home</ng-template>
+                        <div class="tab-content">Home content</div>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label><mat-icon>account_circle</mat-icon> Profile</ng-template>
+                        <div class="tab-content">Profile content</div>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label><mat-icon>settings</mat-icon> Settings</ng-template>
+                        <div class="tab-content">Settings content</div>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['icons'], 'Icons')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <mat-expansion-panel class="code-panel">
+        <mat-expansion-panel-header><mat-panel-title><mat-icon>code</mat-icon> View All
+                Code</mat-panel-title></mat-expansion-panel-header>
+        <mat-tab-group>
+            <mat-tab label="Basic">
+                <pre><code>{{codes['basic']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Icons">
+                <pre><code>{{codes['icons']}}</code></pre>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-expansion-panel>
+</div>

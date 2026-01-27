@@ -1,0 +1,6 @@
+@use '../autocomplete/autocomplete-showcase.component.scss' as base;
+
+.demo-tree {
+    max-height: 300px;
+    overflow: auto;
+}

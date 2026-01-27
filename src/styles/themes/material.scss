@@ -1,0 +1,419 @@
+// ============================================================================
+// MATERIAL DESIGN 3 THEME - Prebuilt Template
+// ============================================================================
+// Usage: Import this file directly in your angular.json or styles.scss
+// @import 'themes/material';
+// or link the compiled CSS in your index.html
+// ============================================================================
+
+@use '@angular/material' as mat;
+@use 'palettes' as palettes;
+
+// =============================================================================
+// Theme Configuration
+// =============================================================================
+
+html {
+    // Material Design 3 with Indigo primary palette
+    @include mat.theme((color: (theme-type: light,
+                primary: palettes.$indigo-palette,
+                tertiary: palettes.$teal-palette,
+            ),
+            typography: Roboto,
+            density: 0,
+        ));
+
+    // Additional Material Design enhancements
+    --theme-name: 'material';
+    --theme-style: 'material-design-3';
+
+    // Shape tokens for Material Design
+    --mat-shape-corner-xs: 4px;
+    --mat-shape-corner-sm: 8px;
+    --mat-shape-corner-md: 12px;
+    --mat-shape-corner-lg: 16px;
+    --mat-shape-corner-xl: 28px;
+    --mat-shape-corner-full: 9999px;
+}
+
+// Dark theme variant (activated via .dark-theme class or media query)
+html.dark-theme,
+html[data-theme="dark"] {
+    @include mat.theme((color: (theme-type: dark,
+                primary: palettes.$indigo-palette,
+                tertiary: palettes.$teal-palette,
+            ),
+            typography: Roboto,
+            density: 0,
+        ));
+}
+
+// Auto dark mode based on system preference
+@media (prefers-color-scheme: dark) {
+    html:not(.light-theme):not([data-theme="light"]) {
+        @include mat.theme((color: (theme-type: dark,
+                    primary: palettes.$indigo-palette,
+                    tertiary: palettes.$teal-palette,
+                ),
+                typography: Roboto,
+                density: 0,
+            ));
+    }
+}
+
+// =============================================================================
+// Base Styles
+// =============================================================================
+
+body {
+    color-scheme: light dark;
+    background-color: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+    font-family: var(--mat-sys-body-medium-font);
+    font-size: var(--mat-sys-body-medium-size);
+    font-weight: var(--mat-sys-body-medium-weight);
+    line-height: var(--mat-sys-body-medium-line-height);
+    letter-spacing: var(--mat-sys-body-medium-tracking);
+    margin: 0;
+    min-height: 100vh;
+}
+
+// =============================================================================
+// Material Design Component Enhancements
+// =============================================================================
+
+// Enhanced card styling
+.mat-mdc-card {
+    border-radius: var(--mat-shape-corner-lg);
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+    &:hover {
+        box-shadow: var(--mat-sys-elevation-3);
+    }
+}
+
+// Enhanced button styling
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-flat-button,
+.mat-mdc-outlined-button {
+    border-radius: var(--mat-shape-corner-full);
+    transition: all 0.2s ease-in-out;
+}
+
+// Fab button with proper M3 shape
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+    border-radius: var(--mat-shape-corner-lg);
+}
+
+// Enhanced form field
+.mat-mdc-form-field {
+    --mdc-outlined-text-field-container-shape: var(--mat-shape-corner-xs);
+    transition: all 0.2s ease-in-out;
+}
+
+// Enhanced chips
+.mat-mdc-chip {
+    border-radius: var(--mat-shape-corner-sm);
+}
+
+// Dialog with proper corners
+.mat-mdc-dialog-container {
+    border-radius: var(--mat-shape-corner-xl) !important;
+}
+
+// Snackbar styling
+.mat-mdc-snack-bar-container {
+    border-radius: var(--mat-shape-corner-xs);
+}
+
+// Menu with proper corners
+.mat-mdc-menu-panel {
+    border-radius: var(--mat-shape-corner-xs);
+}
+
+// =============================================================================
+// Additional Component Styling
+// =============================================================================
+
+// Tooltip
+.mat-mdc-tooltip {
+    .mdc-tooltip__surface {
+        border-radius: var(--mat-shape-corner-xs);
+    }
+}
+
+// Datepicker
+.mat-datepicker-content {
+    border-radius: var(--mat-shape-corner-lg);
+}
+
+.mat-calendar-body-cell-content {
+    border-radius: var(--mat-shape-corner-full);
+}
+
+// Stepper
+.mat-step-header {
+    border-radius: var(--mat-shape-corner-sm);
+
+    &:hover {
+        background-color: var(--mat-sys-surface-container);
+    }
+}
+
+.mat-step-icon {
+    border-radius: var(--mat-shape-corner-full);
+}
+
+// Sidenav
+.mat-sidenav {
+    background-color: var(--mat-sys-surface);
+}
+
+.mat-sidenav-content {
+    background-color: var(--mat-sys-surface-container-low);
+}
+
+// Table
+.mat-mdc-table {
+    .mat-mdc-header-row {
+        background-color: var(--mat-sys-surface-container);
+    }
+
+    .mat-mdc-row {
+        &:hover {
+            background-color: var(--mat-sys-surface-container-low);
+        }
+    }
+}
+
+// Paginator
+.mat-mdc-paginator {
+    background-color: var(--mat-sys-surface-container);
+    border-radius: var(--mat-shape-corner-sm);
+}
+
+// Bottom Sheet
+.mat-bottom-sheet-container {
+    border-radius: var(--mat-shape-corner-xl) var(--mat-shape-corner-xl) 0 0;
+}
+
+// Autocomplete
+.mat-mdc-autocomplete-panel {
+    border-radius: var(--mat-shape-corner-xs);
+}
+
+// Select
+.mat-mdc-select-panel {
+    border-radius: var(--mat-shape-corner-xs);
+}
+
+// Slider
+.mat-mdc-slider {
+    .mdc-slider__thumb {
+        border-radius: var(--mat-shape-corner-full);
+    }
+}
+
+// Expansion Panel
+.mat-expansion-panel {
+    border-radius: var(--mat-shape-corner-md);
+
+    &:first-of-type {
+        border-top-left-radius: var(--mat-shape-corner-lg);
+        border-top-right-radius: var(--mat-shape-corner-lg);
+    }
+
+    &:last-of-type {
+        border-bottom-left-radius: var(--mat-shape-corner-lg);
+        border-bottom-right-radius: var(--mat-shape-corner-lg);
+    }
+}
+
+// Tabs
+.mat-mdc-tab-header {
+    background-color: var(--mat-sys-surface-container);
+}
+
+// Progress Bar
+.mat-mdc-progress-bar {
+    border-radius: var(--mat-shape-corner-full);
+
+    .mdc-linear-progress__bar-inner {
+        border-radius: var(--mat-shape-corner-full);
+    }
+}
+
+// Badge
+.mat-badge-content {
+    border-radius: var(--mat-shape-corner-full);
+}
+
+// Toolbar
+.mat-toolbar {
+    background-color: var(--mat-sys-surface-container);
+}
+
+// =============================================================================
+// Typography Enhancements
+// =============================================================================
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0 0 0.5em;
+    color: var(--mat-sys-on-surface);
+}
+
+h1 {
+    font: var(--mat-sys-display-large);
+}
+
+h2 {
+    font: var(--mat-sys-display-medium);
+}
+
+h3 {
+    font: var(--mat-sys-display-small);
+}
+
+h4 {
+    font: var(--mat-sys-headline-large);
+}
+
+h5 {
+    font: var(--mat-sys-headline-medium);
+}
+
+h6 {
+    font: var(--mat-sys-headline-small);
+}
+
+p {
+    margin: 0 0 1em;
+    font: var(--mat-sys-body-large);
+}
+
+small {
+    font: var(--mat-sys-body-small);
+}
+
+// =============================================================================
+// Utility Classes
+// =============================================================================
+
+.surface {
+    background-color: var(--mat-sys-surface);
+}
+
+.surface-variant {
+    background-color: var(--mat-sys-surface-variant);
+}
+
+.surface-container {
+    background-color: var(--mat-sys-surface-container);
+}
+
+.surface-container-low {
+    background-color: var(--mat-sys-surface-container-low);
+}
+
+.surface-container-high {
+    background-color: var(--mat-sys-surface-container-high);
+}
+
+.text-primary {
+    color: var(--mat-sys-primary);
+}
+
+.text-secondary {
+    color: var(--mat-sys-secondary);
+}
+
+.text-tertiary {
+    color: var(--mat-sys-tertiary);
+}
+
+.text-error {
+    color: var(--mat-sys-error);
+}
+
+.text-on-surface {
+    color: var(--mat-sys-on-surface);
+}
+
+.text-on-surface-variant {
+    color: var(--mat-sys-on-surface-variant);
+}
+
+.bg-primary {
+    background-color: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+}
+
+.bg-secondary {
+    background-color: var(--mat-sys-secondary);
+    color: var(--mat-sys-on-secondary);
+}
+
+.bg-tertiary {
+    background-color: var(--mat-sys-tertiary);
+    color: var(--mat-sys-on-tertiary);
+}
+
+.bg-error {
+    background-color: var(--mat-sys-error);
+    color: var(--mat-sys-on-error);
+}
+
+.elevation-0 {
+    box-shadow: none;
+}
+
+.elevation-1 {
+    box-shadow: var(--mat-sys-elevation-1);
+}
+
+.elevation-2 {
+    box-shadow: var(--mat-sys-elevation-2);
+}
+
+.elevation-3 {
+    box-shadow: var(--mat-sys-elevation-3);
+}
+
+.elevation-4 {
+    box-shadow: var(--mat-sys-elevation-4);
+}
+
+.elevation-5 {
+    box-shadow: var(--mat-sys-elevation-5);
+}
+
+.rounded-xs {
+    border-radius: var(--mat-shape-corner-xs);
+}
+
+.rounded-sm {
+    border-radius: var(--mat-shape-corner-sm);
+}
+
+.rounded-md {
+    border-radius: var(--mat-shape-corner-md);
+}
+
+.rounded-lg {
+    border-radius: var(--mat-shape-corner-lg);
+}
+
+.rounded-xl {
+    border-radius: var(--mat-shape-corner-xl);
+}
+
+.rounded-full {
+    border-radius: var(--mat-shape-corner-full);
+}

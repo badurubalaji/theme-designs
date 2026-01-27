@@ -1,0 +1,25 @@
+// ============================================================================
+// Angular Material Theme Designs - Base Styles Only
+// ============================================================================
+// Themes are loaded dynamically at runtime.
+// This file contains only essential base styles.
+// ============================================================================
+
+@use '@angular/material' as mat;
+
+// Base body styles - rest comes from dynamically loaded theme
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Roboto, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+// Smooth theme transitions
+*,
+*::before,
+*::after {
+    transition: background-color 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}

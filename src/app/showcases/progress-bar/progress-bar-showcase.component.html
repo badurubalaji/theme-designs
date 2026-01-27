@@ -1,0 +1,88 @@
+<div class="showcase-container">
+    <div class="showcase-header">
+        <h1>Progress Bar & Spinner</h1>
+        <p class="description">Progress indicators express an unspecified wait time or display the length of a process.
+            <a href="https://material.angular.dev/components/progress-bar" target="_blank">Official docs</a>
+        </p>
+    </div>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Determinate Progress</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="progress-container">
+                    <label>Progress: {{progressValue}}%</label>
+                    <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['determinate'], 'Determinate')"><mat-icon>content_copy</mat-icon>
+                    Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Indeterminate Progress</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['indeterminate'], 'Indeterminate')"><mat-icon>content_copy</mat-icon>
+                    Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Buffer Progress</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <mat-progress-bar mode="buffer" [value]="40" [bufferValue]="70"></mat-progress-bar>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['buffer'], 'Buffer')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Progress Spinners</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="spinner-row">
+                    <mat-spinner diameter="80"></mat-spinner>
+                    <mat-spinner diameter="50"></mat-spinner>
+                    <mat-progress-spinner mode="determinate" [value]="70" diameter="60"></mat-progress-spinner>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['spinner'], 'Spinner')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <mat-expansion-panel class="code-panel">
+        <mat-expansion-panel-header><mat-panel-title><mat-icon>code</mat-icon> View All
+                Code</mat-panel-title></mat-expansion-panel-header>
+        <mat-tab-group>
+            <mat-tab label="Determinate">
+                <pre><code>{{codes['determinate']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Indeterminate">
+                <pre><code>{{codes['indeterminate']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Buffer">
+                <pre><code>{{codes['buffer']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Spinner">
+                <pre><code>{{codes['spinner']}}</code></pre>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-expansion-panel>
+</div>

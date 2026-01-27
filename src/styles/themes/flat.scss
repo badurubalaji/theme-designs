@@ -1,0 +1,551 @@
+// ============================================================================
+// FLAT DESIGN THEME - Zero Elevation, Zero Borders
+// ============================================================================
+// True flat design with no shadows and no borders
+// Uses color blocks and background differences for hierarchy
+// ============================================================================
+
+@use '@angular/material' as mat;
+@use 'palettes' as palettes;
+
+// =============================================================================
+// Flat Design Custom Variables
+// =============================================================================
+
+:root {
+    // Theme identification
+    --theme-name: 'flat';
+    --theme-style: 'zero-elevation';
+
+    // No borders - using color differences instead
+    --flat-hover-brightness: 0.92;
+    --flat-active-brightness: 0.85;
+    --flat-disabled-opacity: 0.5;
+
+    // Truly flat corners (0 or very minimal)
+    --mat-shape-corner-xs: 0px;
+    --mat-shape-corner-sm: 0px;
+    --mat-shape-corner-md: 0px;
+    --mat-shape-corner-lg: 0px;
+    --mat-shape-corner-xl: 0px;
+    --mat-shape-corner-full: 0px;
+
+    // Vibrant, bold colors (no muted tones)
+    --flat-primary: #3f51b5;
+    --flat-secondary: #ff4081;
+    --flat-success: #4caf50;
+    --flat-warning: #ff9800;
+    --flat-error: #f44336;
+    --flat-info: #2196f3;
+}
+
+// =============================================================================
+// Theme Configuration
+// =============================================================================
+
+html {
+    @include mat.theme((color: (theme-type: light,
+                primary: palettes.$indigo-palette,
+                tertiary: palettes.$rose-palette,
+            ),
+            typography: Roboto,
+            density: 0,
+        ));
+
+    // Disable all shadows completely
+    --mat-sys-elevation-1: none;
+    --mat-sys-elevation-2: none;
+    --mat-sys-elevation-3: none;
+    --mat-sys-elevation-4: none;
+    --mat-sys-elevation-5: none;
+
+    // Solid surface colors with clear hierarchy
+    --mat-sys-surface: #ffffff;
+    --mat-sys-surface-container: #f0f0f0;
+    --mat-sys-surface-container-low: #f7f7f7;
+    --mat-sys-surface-container-high: #e5e5e5;
+    --mat-sys-surface-variant: #d9d9d9;
+    --mat-sys-outline: transparent;
+    --mat-sys-outline-variant: transparent;
+}
+
+// Dark theme variant
+html.dark-theme,
+html[data-theme="dark"] {
+    @include mat.theme((color: (theme-type: dark,
+                primary: palettes.$indigo-palette,
+                tertiary: palettes.$rose-palette,
+            ),
+            typography: Roboto,
+            density: 0,
+        ));
+
+    --mat-sys-surface: #1a1a1a;
+    --mat-sys-surface-container: #2a2a2a;
+    --mat-sys-surface-container-low: #222222;
+    --mat-sys-surface-container-high: #3a3a3a;
+    --mat-sys-surface-variant: #444444;
+    --mat-sys-outline: transparent;
+    --mat-sys-outline-variant: transparent;
+}
+
+// =============================================================================
+// Base Styles
+// =============================================================================
+
+body {
+    background-color: var(--mat-sys-surface-container);
+    color: var(--mat-sys-on-surface);
+    font-family: var(--mat-sys-body-medium-font);
+    margin: 0;
+    min-height: 100vh;
+}
+
+// =============================================================================
+// Remove ALL shadows and borders globally
+// =============================================================================
+
+*,
+*::before,
+*::after {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+// Allow border-radius on pills/full shapes only
+.rounded-full,
+.mat-mdc-chip,
+.mat-mdc-slider .mdc-slider__thumb {
+    border-radius: 9999px !important;
+}
+
+// =============================================================================
+// Cards - solid color blocks, no borders
+// =============================================================================
+
+.mat-mdc-card {
+    background-color: var(--mat-sys-surface) !important;
+    border: none !important;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: var(--mat-sys-surface-container-low) !important;
+    }
+}
+
+// =============================================================================
+// Buttons - solid colors, sharp edges
+// =============================================================================
+
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-flat-button,
+.mat-mdc-outlined-button,
+.mat-mdc-icon-button,
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+    transition: filter 0.15s ease-in-out, background-color 0.15s ease-in-out;
+    border: none !important;
+
+    &:hover {
+        filter: brightness(var(--flat-hover-brightness));
+    }
+
+    &:active {
+        filter: brightness(var(--flat-active-brightness));
+    }
+}
+
+.mat-mdc-outlined-button {
+    background-color: var(--mat-sys-surface-container) !important;
+}
+
+// =============================================================================
+// Form Fields - solid backgrounds, no borders
+// =============================================================================
+
+.mat-mdc-form-field {
+    .mdc-text-field {
+        background: var(--mat-sys-surface-container-high) !important;
+        border: none !important;
+    }
+
+    // Keep label visible, just hide border styling
+    .mdc-notched-outline,
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+        border-color: transparent !important;
+    }
+
+    .mat-mdc-floating-label {
+        color: var(--mat-sys-on-surface-variant) !important;
+    }
+
+    .mat-mdc-form-field-flex {
+        background: var(--mat-sys-surface-container-high);
+    }
+
+    &.mat-focused {
+        .mdc-text-field {
+            background: var(--mat-sys-surface-container) !important;
+        }
+
+        .mat-mdc-floating-label {
+            color: var(--mat-sys-primary) !important;
+        }
+    }
+}
+
+// =============================================================================
+// Chips - solid color blocks
+// =============================================================================
+
+.mat-mdc-chip {
+    background-color: var(--mat-sys-surface-container) !important;
+    border: none !important;
+
+    &.mat-mdc-chip-selected,
+    &.mat-mdc-chip-highlighted {
+        background-color: var(--mat-sys-primary) !important;
+        color: var(--mat-sys-on-primary) !important;
+    }
+}
+
+// =============================================================================
+// Toggle & Slide Toggle
+// =============================================================================
+
+.mat-mdc-slide-toggle {
+    .mdc-switch__track {
+        border: none !important;
+    }
+}
+
+.mat-button-toggle-appearance-standard {
+    background-color: var(--mat-sys-surface-container);
+    border: none !important;
+
+    &.mat-button-toggle-checked {
+        background-color: var(--mat-sys-primary);
+        color: var(--mat-sys-on-primary);
+    }
+}
+
+// =============================================================================
+// Dialog & Overlays
+// =============================================================================
+
+.mat-mdc-dialog-container {
+    background-color: var(--mat-sys-surface) !important;
+    border: none !important;
+}
+
+.mat-mdc-menu-panel {
+    background-color: var(--mat-sys-surface) !important;
+    border: none !important;
+}
+
+.mat-mdc-select-panel {
+    background-color: var(--mat-sys-surface) !important;
+    border: none !important;
+}
+
+.mat-mdc-autocomplete-panel {
+    background-color: var(--mat-sys-surface) !important;
+    border: none !important;
+}
+
+// =============================================================================
+// Snackbar
+// =============================================================================
+
+.mat-mdc-snack-bar-container {
+    background-color: var(--mat-sys-inverse-surface) !important;
+    color: var(--mat-sys-inverse-on-surface);
+    border: none !important;
+}
+
+// =============================================================================
+// Tooltip
+// =============================================================================
+
+.mat-mdc-tooltip {
+    .mdc-tooltip__surface {
+        background-color: var(--mat-sys-inverse-surface) !important;
+        color: var(--mat-sys-inverse-on-surface);
+    }
+}
+
+// =============================================================================
+// Tabs
+// =============================================================================
+
+.mat-mdc-tab-header {
+    border: none !important;
+    background-color: var(--mat-sys-surface-container);
+}
+
+.mat-mdc-tab {
+    &.mdc-tab--active {
+        background-color: var(--mat-sys-surface);
+    }
+}
+
+.mat-mdc-tab-body-wrapper {
+    background-color: var(--mat-sys-surface);
+}
+
+// =============================================================================
+// Expansion Panels
+// =============================================================================
+
+.mat-expansion-panel {
+    background-color: var(--mat-sys-surface) !important;
+    border: none !important;
+
+    &.mat-expanded {
+        background-color: var(--mat-sys-surface-container-low) !important;
+    }
+}
+
+.mat-expansion-panel-header {
+    background-color: var(--mat-sys-surface-container) !important;
+    border: none !important;
+
+    &:hover {
+        background-color: var(--mat-sys-surface-container-high) !important;
+    }
+}
+
+// =============================================================================
+// List
+// =============================================================================
+
+.mat-mdc-list {
+    .mat-mdc-list-item {
+        border: none !important;
+
+        &:hover {
+            background-color: var(--mat-sys-surface-container);
+        }
+    }
+}
+
+.mat-mdc-nav-list {
+    .mat-mdc-list-item {
+        border: none !important;
+
+        &.active {
+            background-color: var(--mat-sys-primary-container);
+        }
+    }
+}
+
+// =============================================================================
+// Table - alternating rows, no borders
+// =============================================================================
+
+.mat-mdc-table {
+    border: none !important;
+    background-color: var(--mat-sys-surface);
+
+    .mat-mdc-header-row {
+        background-color: var(--mat-sys-surface-container) !important;
+        border: none !important;
+    }
+
+    .mat-mdc-header-cell {
+        border: none !important;
+        font-weight: 600;
+    }
+
+    .mat-mdc-row {
+        border: none !important;
+
+        &:nth-child(even) {
+            background-color: var(--mat-sys-surface-container-low);
+        }
+
+        &:hover {
+            background-color: var(--mat-sys-surface-container);
+        }
+    }
+
+    .mat-mdc-cell {
+        border: none !important;
+    }
+}
+
+// =============================================================================
+// Paginator
+// =============================================================================
+
+.mat-mdc-paginator {
+    background-color: var(--mat-sys-surface-container);
+    border: none !important;
+}
+
+// =============================================================================
+// Datepicker
+// =============================================================================
+
+.mat-datepicker-content {
+    background-color: var(--mat-sys-surface) !important;
+    border: none !important;
+}
+
+.mat-calendar {
+    background-color: var(--mat-sys-surface);
+}
+
+.mat-calendar-body-cell-content {
+    &:hover {
+        background-color: var(--mat-sys-surface-container);
+    }
+
+    &.mat-calendar-body-selected {
+        background-color: var(--mat-sys-primary);
+        color: var(--mat-sys-on-primary);
+    }
+}
+
+// =============================================================================
+// Stepper
+// =============================================================================
+
+.mat-stepper-horizontal,
+.mat-stepper-vertical {
+    background-color: var(--mat-sys-surface);
+}
+
+.mat-step-header {
+    background-color: var(--mat-sys-surface-container);
+    border: none !important;
+
+    &:hover {
+        background-color: var(--mat-sys-surface-container-high);
+    }
+}
+
+.mat-stepper-horizontal-line {
+    border-top-color: var(--mat-sys-surface-variant) !important;
+}
+
+// =============================================================================
+// Toolbar
+// =============================================================================
+
+.mat-toolbar {
+    border: none !important;
+}
+
+// =============================================================================
+// Sidenav
+// =============================================================================
+
+.mat-sidenav {
+    background-color: var(--mat-sys-surface);
+    border: none !important;
+}
+
+.mat-sidenav-content {
+    background-color: var(--mat-sys-surface-container);
+}
+
+// =============================================================================
+// Progress Bar & Spinner
+// =============================================================================
+
+.mat-mdc-progress-bar {
+    border: none !important;
+}
+
+.mat-mdc-progress-spinner {
+    border: none !important;
+}
+
+// =============================================================================
+// Bottom Sheet
+// =============================================================================
+
+.mat-bottom-sheet-container {
+    background-color: var(--mat-sys-surface) !important;
+    border: none !important;
+}
+
+// =============================================================================
+// Badge
+// =============================================================================
+
+.mat-badge-content {
+    border: none !important;
+}
+
+// =============================================================================
+// Divider - subtle color difference instead of line
+// =============================================================================
+
+.mat-divider {
+    border-top-color: var(--mat-sys-surface-variant) !important;
+}
+
+// =============================================================================
+// Utility Classes
+// =============================================================================
+
+.surface {
+    background-color: var(--mat-sys-surface);
+}
+
+.surface-container {
+    background-color: var(--mat-sys-surface-container);
+}
+
+.surface-high {
+    background-color: var(--mat-sys-surface-container-high);
+}
+
+.text-primary {
+    color: var(--mat-sys-primary);
+}
+
+.text-secondary {
+    color: var(--mat-sys-secondary);
+}
+
+.bg-primary {
+    background-color: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+}
+
+.bg-secondary {
+    background-color: var(--mat-sys-secondary);
+    color: var(--mat-sys-on-secondary);
+}
+
+.bg-error {
+    background-color: var(--mat-sys-error);
+    color: var(--mat-sys-on-error);
+}
+
+// Status colors
+.flat-success {
+    background-color: var(--flat-success);
+    color: white;
+}
+
+.flat-warning {
+    background-color: var(--flat-warning);
+    color: black;
+}
+
+.flat-info {
+    background-color: var(--flat-info);
+    color: white;
+}
+
+.flat-error {
+    background-color: var(--flat-error);
+    color: white;
+}

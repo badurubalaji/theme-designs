@@ -1,0 +1,57 @@
+<div class="showcase-container">
+    <div class="showcase-header">
+        <h1>Menu</h1>
+        <p class="description">Menus display a list of choices on a temporary surface.
+            <a href="https://material.angular.dev/components/menu" target="_blank">Official docs</a>
+        </p>
+    </div>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Basic Menu</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="button-row">
+                    <button mat-raised-button [matMenuTriggerFor]="basicMenu">Open Menu</button>
+                    <mat-menu #basicMenu="matMenu">
+                        <button mat-menu-item>Item 1</button>
+                        <button mat-menu-item>Item 2</button>
+                        <button mat-menu-item disabled>Disabled</button>
+                        <button mat-menu-item>Item 3</button>
+                    </mat-menu>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['basic'], 'Basic')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Menu with Icons</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="button-row">
+                    <button mat-icon-button [matMenuTriggerFor]="iconMenu"><mat-icon>more_vert</mat-icon></button>
+                    <mat-menu #iconMenu="matMenu">
+                        <button mat-menu-item><mat-icon>edit</mat-icon><span>Edit</span></button>
+                        <button mat-menu-item><mat-icon>content_copy</mat-icon><span>Duplicate</span></button>
+                        <button mat-menu-item><mat-icon>share</mat-icon><span>Share</span></button>
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item><mat-icon>delete</mat-icon><span>Delete</span></button>
+                    </mat-menu>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['icons'], 'Icons')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <mat-expansion-panel class="code-panel">
+        <mat-expansion-panel-header><mat-panel-title><mat-icon>code</mat-icon> View
+                Code</mat-panel-title></mat-expansion-panel-header>
+        <pre><code>{{codes['basic']}}</code></pre>
+    </mat-expansion-panel>
+</div>

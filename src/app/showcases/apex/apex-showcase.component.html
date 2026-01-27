@@ -1,0 +1,67 @@
+<div class="apex-showcase">
+    <h1>Charts Dashboard (ApexCharts)</h1>
+    <p class="subtitle">Modern, interactive SVG charts powered by ApexCharts</p>
+
+    <div class="charts-grid">
+        <!-- 1. Radial Bar -->
+        <div class="chart-card">
+            <h3>Multi-Radial Bar</h3>
+            <p class="chart-description">Futuristic gauge metrics with concentric rings</p>
+            <div class="chart-container">
+                <apx-chart [series]="radialBarOptions.series!" [chart]="radialBarOptions.chart!"
+                    [plotOptions]="radialBarOptions.plotOptions!" [colors]="radialBarOptions.colors!"
+                    [labels]="radialBarOptions.labels!" [legend]="radialBarOptions.legend!">
+                </apx-chart>
+            </div>
+            <div class="code-actions">
+                <button mat-stroked-button (click)="copyCode(radialHtml, 'HTML')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> HTML
+                </button>
+                <button mat-stroked-button (click)="copyCode(radialTs, 'TypeScript')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> TypeScript
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. Candlestick -->
+        <div class="chart-card">
+            <h3>Candlestick Crypto</h3>
+            <p class="chart-description">Financial market data with OHLC values</p>
+            <div class="chart-container">
+                <apx-chart [series]="candlestickOptions.series!" [chart]="candlestickOptions.chart!"
+                    [xaxis]="candlestickOptions.xaxis!" [yaxis]="candlestickOptions.yaxis!"
+                    [plotOptions]="candlestickOptions.plotOptions!" [grid]="candlestickOptions.grid!">
+                </apx-chart>
+            </div>
+            <div class="code-actions">
+                <button mat-stroked-button (click)="copyCode(candleHtml, 'HTML')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> HTML
+                </button>
+                <button mat-stroked-button (click)="copyCode(candleTs, 'TypeScript')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> TypeScript
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. Area -->
+        <div class="chart-card chart-card-wide">
+            <h3>Spline Area Gradient</h3>
+            <p class="chart-description">Smooth visualization with glowing gradients</p>
+            <div class="chart-container">
+                <apx-chart [series]="areaOptions.series!" [chart]="areaOptions.chart!" [xaxis]="areaOptions.xaxis!"
+                    [yaxis]="areaOptions.yaxis!" [colors]="areaOptions.colors!" [fill]="areaOptions.fill!"
+                    [dataLabels]="areaOptions.dataLabels!" [stroke]="areaOptions.stroke!" [legend]="areaOptions.legend!"
+                    [grid]="areaOptions.grid!" [tooltip]="areaOptions.tooltip!">
+                </apx-chart>
+            </div>
+            <div class="code-actions">
+                <button mat-stroked-button (click)="copyCode(areaHtml, 'HTML')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> HTML
+                </button>
+                <button mat-stroked-button (click)="copyCode(areaTs, 'TypeScript')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> TypeScript
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<!-- App Shell - Sidenav + Toolbar + Router Outlet -->
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidenav with component categories -->
+  <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches" class="sidenav">
+
+    <div class="sidenav-header">
+      <mat-icon>palette</mat-icon>
+      <span>Components</span>
+    </div>
+
+    <mat-nav-list>
+      @for (category of categories; track category.name) {
+      @if (category.components.length > 0) {
+      <div class="nav-category">
+        <div class="category-header">
+          <mat-icon>{{category.icon}}</mat-icon>
+          <span>{{category.name}}</span>
+        </div>
+        @for (comp of category.components; track comp.route) {
+        <a mat-list-item [class.active]="isActiveRoute(comp.route)" (click)="navigateTo(comp.route)">
+          {{comp.name}}
+        </a>
+        }
+      </div>
+      }
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Main Content -->
+  <mat-sidenav-content class="main-content">
+    <!-- Toolbar -->
+    <mat-toolbar color="primary" class="toolbar">
+      <button mat-icon-button (click)="toggleSidenav()" class="menu-btn">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="app-title">Angular Material Themes</span>
+      <span class="spacer"></span>
+
+      <!-- Theme selector -->
+      <mat-form-field appearance="outline" class="theme-select">
+        <mat-label>Theme</mat-label>
+        <mat-select [value]="selectedTheme()" (selectionChange)="onThemeChange($event.value)">
+          @for (theme of themes; track theme.value) {
+          <mat-option [value]="theme.value">
+            <mat-icon>{{theme.icon}}</mat-icon>
+            {{theme.label}}
+          </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-icon-button (click)="toggleDarkMode()" matTooltip="Toggle dark mode">
+        <mat-icon>{{darkMode() ? 'light_mode' : 'dark_mode'}}</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <!-- Router Outlet - Loads component showcases on demand -->
+    <main class="content-wrapper">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

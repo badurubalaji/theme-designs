@@ -1,0 +1,75 @@
+.showcase-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.showcase-header {
+    margin-bottom: 32px;
+
+    h1 {
+        margin: 0 0 8px;
+        font-size: 2rem;
+        font-weight: 500;
+    }
+
+    .description {
+        color: var(--mat-sys-on-surface-variant, #666);
+        font-size: 1rem;
+        line-height: 1.6;
+        margin: 0;
+
+        a {
+            color: var(--mat-sys-primary);
+        }
+    }
+}
+
+.example-section {
+    margin-bottom: 24px;
+}
+
+.example-card {
+    mat-card-content {
+        padding: 24px;
+    }
+
+    mat-card-actions {
+        padding: 8px 16px;
+        border-top: 1px solid var(--mat-sys-outline-variant, rgba(0, 0, 0, 0.1));
+    }
+}
+
+.example-field {
+    width: 100%;
+    max-width: 400px;
+}
+
+.option-secondary {
+    color: var(--mat-sys-on-surface-variant, #666);
+    font-size: 0.85em;
+}
+
+.code-panel {
+    margin-top: 32px;
+
+    mat-panel-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    pre {
+        margin: 16px;
+        padding: 16px;
+        background: var(--mat-sys-surface-container, #f5f5f5);
+        border-radius: 8px;
+        overflow-x: auto;
+        font-size: 0.8125rem;
+        line-height: 1.6;
+
+        code {
+            font-family: 'Roboto Mono', monospace;
+        }
+    }
+}

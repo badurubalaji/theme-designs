@@ -1,0 +1,11 @@
+@use '../autocomplete/autocomplete-showcase.component.scss' as base;
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.full-width {
+    width: 100%;
+}

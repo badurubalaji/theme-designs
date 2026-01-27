@@ -1,0 +1,7 @@
+@use '../autocomplete/autocomplete-showcase.component.scss' as base;
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}

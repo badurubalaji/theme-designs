@@ -1,0 +1,139 @@
+<div class="showcase-container">
+    <div class="showcase-header">
+        <h1>Button</h1>
+        <p class="description">Buttons communicate actions that users can take.
+            <a href="https://material.angular.dev/components/button" target="_blank">Official docs</a>
+        </p>
+    </div>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Basic Buttons</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="button-row">
+                    <button mat-button>Basic</button>
+                    <button mat-button color="primary">Primary</button>
+                    <button mat-button color="accent">Accent</button>
+                    <button mat-button color="warn">Warn</button>
+                    <button mat-button disabled>Disabled</button>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['basic'], 'Basic')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Raised Buttons</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="button-row">
+                    <button mat-raised-button>Basic</button>
+                    <button mat-raised-button color="primary">Primary</button>
+                    <button mat-raised-button color="accent">Accent</button>
+                    <button mat-raised-button color="warn">Warn</button>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['raised'], 'Raised')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Stroked Buttons</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="button-row">
+                    <button mat-stroked-button>Basic</button>
+                    <button mat-stroked-button color="primary">Primary</button>
+                    <button mat-stroked-button color="warn">Warn</button>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['stroked'], 'Stroked')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Flat Buttons</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="button-row">
+                    <button mat-flat-button>Basic</button>
+                    <button mat-flat-button color="primary">Primary</button>
+                    <button mat-flat-button color="accent">Accent</button>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['flat'], 'Flat')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Icon Buttons</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="button-row">
+                    <button mat-icon-button><mat-icon>home</mat-icon></button>
+                    <button mat-icon-button color="primary"><mat-icon>settings</mat-icon></button>
+                    <button mat-icon-button color="accent"><mat-icon>favorite</mat-icon></button>
+                    <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['icon'], 'Icon')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>FAB Buttons</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="button-row">
+                    <button mat-fab color="primary"><mat-icon>add</mat-icon></button>
+                    <button mat-mini-fab color="accent"><mat-icon>edit</mat-icon></button>
+                    <button mat-fab extended color="primary"><mat-icon>add</mat-icon>Create</button>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['fab'], 'FAB')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <mat-expansion-panel class="code-panel">
+        <mat-expansion-panel-header><mat-panel-title><mat-icon>code</mat-icon> View All
+                Code</mat-panel-title></mat-expansion-panel-header>
+        <mat-tab-group>
+            <mat-tab label="Basic">
+                <pre><code>{{codes['basic']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Raised">
+                <pre><code>{{codes['raised']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Stroked">
+                <pre><code>{{codes['stroked']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Flat">
+                <pre><code>{{codes['flat']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Icon">
+                <pre><code>{{codes['icon']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="FAB">
+                <pre><code>{{codes['fab']}}</code></pre>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-expansion-panel>
+</div>

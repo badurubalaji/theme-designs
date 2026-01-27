@@ -1,0 +1,8 @@
+@use '../autocomplete/autocomplete-showcase.component.scss' as base;
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+}

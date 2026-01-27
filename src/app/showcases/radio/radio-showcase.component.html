@@ -1,0 +1,86 @@
+<div class="showcase-container">
+    <div class="showcase-header">
+        <h1>Radio Buttons</h1>
+        <p class="description">Radio buttons allow the user to select one option from a set.
+            <a href="https://material.angular.dev/components/radio" target="_blank">Official docs</a>
+        </p>
+    </div>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>Basic Radio Group</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-radio-group [(ngModel)]="selectedValue" class="radio-group">
+                    <mat-radio-button value="option1">Option 1</mat-radio-button>
+                    <mat-radio-button value="option2">Option 2</mat-radio-button>
+                    <mat-radio-button value="option3">Option 3</mat-radio-button>
+                    <mat-radio-button value="option4" disabled>Disabled</mat-radio-button>
+                </mat-radio-group>
+                <p class="selected-value">Selected: {{selectedValue}}</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['basic'], 'Basic Radio')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>Color Variants</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-radio-group class="radio-group">
+                    <mat-radio-button color="primary" value="1" checked>Primary</mat-radio-button>
+                    <mat-radio-button color="accent" value="2">Accent</mat-radio-button>
+                    <mat-radio-button color="warn" value="3">Warn</mat-radio-button>
+                </mat-radio-group>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['colors'], 'Colors')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>Label Position</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-radio-group class="radio-group">
+                    <mat-radio-button value="before" labelPosition="before">Label before</mat-radio-button>
+                    <mat-radio-button value="after" labelPosition="after">Label after</mat-radio-button>
+                </mat-radio-group>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['label-position'], 'Label Position')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <mat-expansion-panel class="code-panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title><mat-icon>code</mat-icon> View All Code</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-tab-group>
+            <mat-tab label="Basic">
+                <pre><code>{{codes['basic']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Colors">
+                <pre><code>{{codes['colors']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Label Position">
+                <pre><code>{{codes['label-position']}}</code></pre>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-expansion-panel>
+</div>

@@ -1,0 +1,204 @@
+// ============================================================================
+// Elevation & Shadow Utilities
+// Custom shadows for various design styles
+// ============================================================================
+
+@use 'sass:map';
+@use 'tokens' as tokens;
+
+// =============================================================================
+// Standard Material Elevation (for reference and fallback)
+// =============================================================================
+
+@mixin material-elevation($level: 1) {
+    @if $level ==0 {
+        box-shadow: none;
+    }
+
+    @else if $level ==1 {
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+
+    @else if $level ==2 {
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
+    }
+
+    @else if $level ==3 {
+        box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    @else if $level ==4 {
+        box-shadow: 0 6px 10px 4px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    @else if $level ==5 {
+        box-shadow: 0 8px 12px 6px rgba(0, 0, 0, 0.15), 0 4px 4px rgba(0, 0, 0, 0.3);
+    }
+}
+
+// =============================================================================
+// Neumorphism Shadows - Soft UI Effect
+// =============================================================================
+
+@mixin neumorphism-shadow($size: 'md', $inset: false) {
+    $light: tokens.get-token(tokens.$neumorphism-tokens, shadow-light);
+    $dark: tokens.get-token(tokens.$neumorphism-tokens, shadow-dark);
+
+    $distance: tokens.get-token(tokens.$neumorphism-tokens, shadow-distance-#{$size});
+    $blur: tokens.get-token(tokens.$neumorphism-tokens, shadow-blur-#{$size});
+
+    @if $inset {
+        $light: tokens.get-token(tokens.$neumorphism-tokens, inset-light);
+        $dark: tokens.get-token(tokens.$neumorphism-tokens, inset-dark);
+        box-shadow:
+            inset $distance $distance $blur $dark,
+            inset (-$distance) (-$distance) $blur $light;
+    }
+
+    @else {
+        box-shadow:
+            (-$distance) (-$distance) $blur $light,
+            $distance $distance $blur $dark;
+    }
+}
+
+/// Neumorphism elevated state (raised)
+@mixin neumorphism-raised($size: 'md') {
+    @include neumorphism-shadow($size, false);
+}
+
+/// Neumorphism pressed state (inset)
+@mixin neumorphism-pressed($size: 'md') {
+    @include neumorphism-shadow($size, true);
+}
+
+/// Neumorphism concave surface
+@mixin neumorphism-concave($size: 'md') {
+    @include neumorphism-shadow($size, true);
+    background: linear-gradient(145deg, rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.03));
+}
+
+/// Neumorphism convex surface
+@mixin neumorphism-convex($size: 'md') {
+    @include neumorphism-shadow($size, false);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.02));
+}
+
+// =============================================================================
+// Glassmorphism Effects - Frosted Glass
+// =============================================================================
+
+@mixin glassmorphism($blur: 'md', $opacity: 'medium') {
+    $blur-value: tokens.get-token(tokens.$glassmorphism-tokens, blur-#{$blur});
+    $opacity-value: tokens.get-token(tokens.$glassmorphism-tokens, opacity-#{$opacity});
+    $border-color: tokens.get-token(tokens.$glassmorphism-tokens, border-color);
+    $border-width: tokens.get-token(tokens.$glassmorphism-tokens, border-width);
+    $saturation: tokens.get-token(tokens.$glassmorphism-tokens, saturation);
+
+    backdrop-filter: blur($blur-value) saturate($saturation);
+    -webkit-backdrop-filter: blur($blur-value) saturate($saturation);
+    background: rgba(255, 255, 255, $opacity-value);
+    border: $border-width solid $border-color;
+}
+
+/// Glassmorphism for dark backgrounds
+@mixin glassmorphism-dark($blur: 'md', $opacity: 'medium') {
+    $blur-value: tokens.get-token(tokens.$glassmorphism-tokens, blur-#{$blur});
+    $opacity-value: tokens.get-token(tokens.$glassmorphism-tokens, opacity-#{$opacity});
+    $border-color: rgba(255, 255, 255, 0.1);
+    $saturation: tokens.get-token(tokens.$glassmorphism-tokens, saturation);
+
+    backdrop-filter: blur($blur-value) saturate($saturation);
+    -webkit-backdrop-filter: blur($blur-value) saturate($saturation);
+    background: rgba(0, 0, 0, $opacity-value * 0.5);
+    border: 1px solid $border-color;
+}
+
+// =============================================================================
+// Crystal Effects - Gem-like Appearance
+// =============================================================================
+
+@mixin crystal-surface($transparency: 'primary') {
+    $opacity: tokens.get-token(tokens.$crystal-tokens, transparency-#{$transparency});
+    $angle: tokens.get-token(tokens.$crystal-tokens, refraction-angle);
+    $start: tokens.get-token(tokens.$crystal-tokens, refraction-opacity-start);
+    $end: tokens.get-token(tokens.$crystal-tokens, refraction-opacity-end);
+    $edge-light: tokens.get-token(tokens.$crystal-tokens, edge-light);
+    $edge-shadow: tokens.get-token(tokens.$crystal-tokens, edge-shadow);
+
+    background: linear-gradient($angle,
+            rgba(255, 255, 255, $start),
+            rgba(255, 255, 255, $end));
+    box-shadow:
+        inset 0 1px 0 $edge-light,
+        inset 0 -1px 0 $edge-shadow,
+        0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/// Crystal with prismatic highlight effect
+@mixin crystal-prismatic() {
+    $prism1: tokens.get-token(tokens.$crystal-tokens, prism-color-1);
+    $prism2: tokens.get-token(tokens.$crystal-tokens, prism-color-2);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg,
+                $prism1 0%,
+                transparent 40%,
+                transparent 60%,
+                $prism2 100%);
+        pointer-events: none;
+        border-radius: inherit;
+    }
+}
+
+// =============================================================================
+// Flat Design - No Shadows
+// =============================================================================
+
+@mixin flat-surface($border-size: 'sm') {
+    $width: tokens.get-token(tokens.$flat-tokens, border-width-#{$border-size});
+
+    box-shadow: none;
+    border: $width solid currentColor;
+}
+
+@mixin flat-hover() {
+    $darken: tokens.get-token(tokens.$flat-tokens, hover-darken);
+    filter: brightness(calc(1 - #{$darken} / 100));
+}
+
+@mixin flat-active() {
+    $darken: tokens.get-token(tokens.$flat-tokens, active-darken);
+    filter: brightness(calc(1 - #{$darken} / 100));
+}
+
+// =============================================================================
+// Minimal Design - Subtle Boundaries
+// =============================================================================
+
+@mixin minimal-surface() {
+    $border-color: tokens.get-token(tokens.$minimal-tokens, border-color);
+    $border-width: tokens.get-token(tokens.$minimal-tokens, border-width);
+
+    box-shadow: none;
+    border: $border-width solid $border-color;
+}
+
+@mixin minimal-spacing() {
+    $multiplier: tokens.get-token(tokens.$minimal-tokens, spacing-multiplier);
+    $base: tokens.get-token(tokens.$minimal-tokens, padding-base);
+
+    padding: calc(#{$base} * #{$multiplier});
+}
+
+@mixin minimal-emphasis() {
+    $weight: tokens.get-token(tokens.$minimal-tokens, text-weight-emphasis);
+    font-weight: $weight;
+}

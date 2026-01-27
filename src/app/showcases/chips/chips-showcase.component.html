@@ -1,0 +1,86 @@
+<div class="showcase-container">
+    <div class="showcase-header">
+        <h1>Chips</h1>
+        <p class="description">Chips are compact elements that represent input, attribute, or action.
+            <a href="https://material.angular.dev/components/chips" target="_blank">Official docs</a>
+        </p>
+    </div>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Basic Chips</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <mat-chip-set class="chip-row">
+                    <mat-chip>Angular</mat-chip>
+                    <mat-chip>React</mat-chip>
+                    <mat-chip>Vue</mat-chip>
+                    <mat-chip>Svelte</mat-chip>
+                </mat-chip-set>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['basic'], 'Basic')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Chip Colors</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <mat-chip-set class="chip-row">
+                    <mat-chip highlighted>Default</mat-chip>
+                    <mat-chip color="primary" highlighted>Primary</mat-chip>
+                    <mat-chip color="accent" highlighted>Accent</mat-chip>
+                    <mat-chip color="warn" highlighted>Warn</mat-chip>
+                </mat-chip-set>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['colors'], 'Colors')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Removable Chips</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <mat-chip-set class="chip-row">
+                    <mat-chip>
+                        Keyword 1
+                        <button matChipRemove><mat-icon>cancel</mat-icon></button>
+                    </mat-chip>
+                    <mat-chip>
+                        Keyword 2
+                        <button matChipRemove><mat-icon>cancel</mat-icon></button>
+                    </mat-chip>
+                    <mat-chip>
+                        Keyword 3
+                        <button matChipRemove><mat-icon>cancel</mat-icon></button>
+                    </mat-chip>
+                </mat-chip-set>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['removable'], 'Removable')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <mat-expansion-panel class="code-panel">
+        <mat-expansion-panel-header><mat-panel-title><mat-icon>code</mat-icon> View All
+                Code</mat-panel-title></mat-expansion-panel-header>
+        <mat-tab-group>
+            <mat-tab label="Basic">
+                <pre><code>{{codes['basic']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Colors">
+                <pre><code>{{codes['colors']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Removable">
+                <pre><code>{{codes['removable']}}</code></pre>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-expansion-panel>
+</div>

@@ -1,0 +1,6 @@
+@use '../autocomplete/autocomplete-showcase.component.scss' as base;
+
+.grid-tile {
+    background: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-primary-container);
+}

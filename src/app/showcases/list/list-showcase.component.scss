@@ -1,0 +1,7 @@
+@use '../autocomplete/autocomplete-showcase.component.scss' as base;
+
+.demo-list {
+    max-width: 400px;
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: 8px;
+}

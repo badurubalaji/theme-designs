@@ -1,0 +1,181 @@
+<div class="showcase-container">
+    <div class="showcase-header">
+        <h1>Autocomplete</h1>
+        <p class="description">
+            The autocomplete is a normal text input enhanced by a panel of suggested options.
+            Learn more in the <a href="https://material.angular.dev/components/autocomplete" target="_blank">official
+                docs</a>.
+        </p>
+    </div>
+
+    <!-- Example 1: Simple Autocomplete -->
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>Simple Autocomplete</mat-card-title>
+                <mat-card-subtitle>Basic autocomplete with static options</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-form-field appearance="outline" class="example-field">
+                    <mat-label>Pick a framework</mat-label>
+                    <input matInput [matAutocomplete]="simpleAuto">
+                    <mat-autocomplete #simpleAuto="matAutocomplete">
+                        <mat-option value="Angular">Angular</mat-option>
+                        <mat-option value="React">React</mat-option>
+                        <mat-option value="Vue">Vue</mat-option>
+                        <mat-option value="Svelte">Svelte</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['simple'], 'Simple Autocomplete')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <!-- Example 2: Filter Autocomplete -->
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>Filter Autocomplete</mat-card-title>
+                <mat-card-subtitle>Options filtered as you type</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-form-field appearance="outline" class="example-field">
+                    <mat-label>Search countries</mat-label>
+                    <input matInput [matAutocomplete]="filterAuto" [(ngModel)]="countryInput"
+                        (ngModelChange)="filterCountries($event)">
+                    <mat-icon matSuffix>search</mat-icon>
+                    <mat-autocomplete #filterAuto="matAutocomplete">
+                        @for (country of filteredCountries; track country) {
+                        <mat-option [value]="country">{{country}}</mat-option>
+                        }
+                    </mat-autocomplete>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['filter'], 'Filter Autocomplete')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <!-- Example 3: Option Groups -->
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>Option Groups</mat-card-title>
+                <mat-card-subtitle>Options organized in groups</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-form-field appearance="outline" class="example-field">
+                    <mat-label>Select a state</mat-label>
+                    <input matInput [matAutocomplete]="groupAuto">
+                    <mat-autocomplete #groupAuto="matAutocomplete">
+                        <mat-optgroup label="East Coast">
+                            <mat-option value="NY">New York</mat-option>
+                            <mat-option value="NJ">New Jersey</mat-option>
+                            <mat-option value="MA">Massachusetts</mat-option>
+                        </mat-optgroup>
+                        <mat-optgroup label="West Coast">
+                            <mat-option value="CA">California</mat-option>
+                            <mat-option value="WA">Washington</mat-option>
+                            <mat-option value="OR">Oregon</mat-option>
+                        </mat-optgroup>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['groups'], 'Option Groups')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <!-- Example 4: Display Value -->
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>Display Value</mat-card-title>
+                <mat-card-subtitle>Custom display function for objects</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-form-field appearance="outline" class="example-field">
+                    <mat-label>Select user</mat-label>
+                    <input matInput [matAutocomplete]="displayAuto" [formControl]="userCtrl">
+                    <mat-autocomplete #displayAuto="matAutocomplete" [displayWith]="displayUserFn">
+                        @for (user of users; track user.id) {
+                        <mat-option [value]="user">
+                            <span>{{user.name}}</span>
+                            <small class="option-secondary"> - {{user.email}}</small>
+                        </mat-option>
+                        }
+                    </mat-autocomplete>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['display'], 'Display Value')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <!-- Example 5: Highlight First Option -->
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>Highlight First Option</mat-card-title>
+                <mat-card-subtitle>First option is automatically highlighted</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-form-field appearance="outline" class="example-field">
+                    <mat-label>Colors</mat-label>
+                    <input matInput [matAutocomplete]="highlightAuto">
+                    <mat-autocomplete #highlightAuto="matAutocomplete" autoActiveFirstOption>
+                        <mat-option value="Red">Red</mat-option>
+                        <mat-option value="Green">Green</mat-option>
+                        <mat-option value="Blue">Blue</mat-option>
+                        <mat-option value="Yellow">Yellow</mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['highlight'], 'Highlight First')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <!-- All Code Examples Panel -->
+    <mat-expansion-panel class="code-panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>code</mat-icon>
+                <span>View All Code Examples</span>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-tab-group>
+            <mat-tab label="Simple">
+                <pre><code>{{codes['simple']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Filter">
+                <pre><code>{{codes['filter']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Groups">
+                <pre><code>{{codes['groups']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Display">
+                <pre><code>{{codes['display']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Highlight">
+                <pre><code>{{codes['highlight']}}</code></pre>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-expansion-panel>
+</div>

@@ -1,0 +1,79 @@
+<div class="showcase-container">
+    <div class="showcase-header">
+        <h1>Slider</h1>
+        <p class="description">Sliders allow users to select from a range of values.
+            <a href="https://material.angular.dev/components/slider" target="_blank">Official docs</a>
+        </p>
+    </div>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Basic Slider</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="slider-container">
+                    <span>Value: {{value}}</span>
+                    <mat-slider min="0" max="100" step="1">
+                        <input matSliderThumb [(ngModel)]="value">
+                    </mat-slider>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['basic'], 'Basic')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Discrete Slider with Tick Marks</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <mat-slider min="0" max="100" step="10" discrete showTickMarks class="full-width">
+                    <input matSliderThumb>
+                </mat-slider>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['discrete'], 'Discrete')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Range Slider</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="slider-container">
+                    <span>Range: {{rangeStart}} - {{rangeEnd}}</span>
+                    <mat-slider min="0" max="100" class="full-width">
+                        <input matSliderStartThumb [(ngModel)]="rangeStart">
+                        <input matSliderEndThumb [(ngModel)]="rangeEnd">
+                    </mat-slider>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['range'], 'Range')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <mat-expansion-panel class="code-panel">
+        <mat-expansion-panel-header><mat-panel-title><mat-icon>code</mat-icon> View All
+                Code</mat-panel-title></mat-expansion-panel-header>
+        <mat-tab-group>
+            <mat-tab label="Basic">
+                <pre><code>{{codes['basic']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Discrete">
+                <pre><code>{{codes['discrete']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Range">
+                <pre><code>{{codes['range']}}</code></pre>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-expansion-panel>
+</div>

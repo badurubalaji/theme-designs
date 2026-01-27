@@ -1,0 +1,161 @@
+<div class="showcase-container">
+    <div class="showcase-header">
+        <h1>Checkbox</h1>
+        <p class="description">
+            Checkboxes allow the user to select one or more items from a set.
+            <a href="https://material.angular.dev/components/checkbox" target="_blank">Official docs</a>
+        </p>
+    </div>
+
+    <!-- Basic Checkbox -->
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>Basic Checkbox</mat-card-title>
+                <mat-card-subtitle>Standard checkbox states</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="checkbox-row">
+                    <mat-checkbox [(ngModel)]="checked">Check me!</mat-checkbox>
+                    <mat-checkbox [checked]="true">Checked</mat-checkbox>
+                    <mat-checkbox disabled>Disabled</mat-checkbox>
+                    <mat-checkbox [checked]="true" disabled>Disabled checked</mat-checkbox>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['basic'], 'Basic Checkbox')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <!-- Color Variants -->
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>Color Variants</mat-card-title>
+                <mat-card-subtitle>Primary, accent, and warn colors</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="checkbox-row">
+                    <mat-checkbox color="primary" [checked]="true">Primary</mat-checkbox>
+                    <mat-checkbox color="accent" [checked]="true">Accent</mat-checkbox>
+                    <mat-checkbox color="warn" [checked]="true">Warn</mat-checkbox>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['colors'], 'Color Variants')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <!-- Indeterminate State -->
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>Indeterminate State</mat-card-title>
+                <mat-card-subtitle>Three-state checkbox</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="checkbox-row">
+                    <mat-checkbox [indeterminate]="indeterminate" [checked]="checked"
+                        (change)="checked = $event.checked; indeterminate = false">
+                        Click to toggle
+                    </mat-checkbox>
+                    <button mat-stroked-button (click)="indeterminate = true">
+                        Set Indeterminate
+                    </button>
+                </div>
+                <p class="state-display">
+                    Checked: {{checked}} | Indeterminate: {{indeterminate}}
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['indeterminate'], 'Indeterminate')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <!-- Label Position -->
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>Label Position</mat-card-title>
+                <mat-card-subtitle>Position label before or after checkbox</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="checkbox-row">
+                    <mat-checkbox labelPosition="before">Label before</mat-checkbox>
+                    <mat-checkbox labelPosition="after">Label after</mat-checkbox>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['label-position'], 'Label Position')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <!-- Nested Checkboxes -->
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>Nested Checkboxes</mat-card-title>
+                <mat-card-subtitle>Parent-child relationship with indeterminate</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="nested-checkboxes">
+                    <mat-checkbox [checked]="allComplete()" [indeterminate]="someComplete()"
+                        (change)="setAll($event.checked)" color="primary">
+                        {{task.name}}
+                    </mat-checkbox>
+                    <ul class="subtasks">
+                        @for (subtask of task.subtasks; track subtask.name) {
+                        <li>
+                            <mat-checkbox [(ngModel)]="subtask.completed" (ngModelChange)="updateParent()"
+                                color="primary">
+                                {{subtask.name}}
+                            </mat-checkbox>
+                        </li>
+                        }
+                    </ul>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="copyCode(codes['nested'], 'Nested Checkboxes')">
+                    <mat-icon>content_copy</mat-icon> Copy Code
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <!-- All Code Examples -->
+    <mat-expansion-panel class="code-panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title><mat-icon>code</mat-icon> View All Code Examples</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-tab-group>
+            <mat-tab label="Basic">
+                <pre><code>{{codes['basic']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Colors">
+                <pre><code>{{codes['colors']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Indeterminate">
+                <pre><code>{{codes['indeterminate']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Label Position">
+                <pre><code>{{codes['label-position']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Nested">
+                <pre><code>{{codes['nested']}}</code></pre>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-expansion-panel>
+</div>

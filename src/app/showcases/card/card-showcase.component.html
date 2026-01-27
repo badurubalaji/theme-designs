@@ -1,0 +1,78 @@
+<div class="showcase-container">
+    <div class="showcase-header">
+        <h1>Card</h1>
+        <p class="description">Cards contain content and actions about a single subject.
+            <a href="https://material.angular.dev/components/card" target="_blank">Official docs</a>
+        </p>
+    </div>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Basic Card</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="cards-grid">
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>Shiba Inu</mat-card-title>
+                            <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <p>The Shiba Inu is the smallest of the six original Japanese spitz breeds.</p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-button>LIKE</button>
+                            <button mat-button>SHARE</button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['basic'], 'Basic')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Card Appearances</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="cards-grid">
+                    <mat-card appearance="outlined">
+                        <mat-card-header><mat-card-title>Outlined Card</mat-card-title></mat-card-header>
+                        <mat-card-content>
+                            <p>This card has an outlined appearance.</p>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card appearance="raised">
+                        <mat-card-header><mat-card-title>Raised Card</mat-card-title></mat-card-header>
+                        <mat-card-content>
+                            <p>This card has a raised appearance.</p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['appearance'], 'Appearance')"><mat-icon>content_copy</mat-icon>
+                    Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <mat-expansion-panel class="code-panel">
+        <mat-expansion-panel-header><mat-panel-title><mat-icon>code</mat-icon> View All
+                Code</mat-panel-title></mat-expansion-panel-header>
+        <mat-tab-group>
+            <mat-tab label="Basic">
+                <pre><code>{{codes['basic']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Image">
+                <pre><code>{{codes['image']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Appearance">
+                <pre><code>{{codes['appearance']}}</code></pre>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-expansion-panel>
+</div>

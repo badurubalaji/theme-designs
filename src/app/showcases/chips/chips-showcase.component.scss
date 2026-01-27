@@ -1,0 +1,7 @@
+@use '../autocomplete/autocomplete-showcase.component.scss' as base;
+
+.chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}

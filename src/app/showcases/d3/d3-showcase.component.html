@@ -1,0 +1,51 @@
+<div class="d3-showcase">
+    <h1>Charts Dashboard (D3.js)</h1>
+    <p class="subtitle">Custom visualizations powered by D3.js with physics and interactions</p>
+
+    <div class="charts-grid">
+        <!-- 1. Force Directed Graph -->
+        <div class="chart-card chart-card-wide">
+            <h3>Force Directed Graph</h3>
+            <p class="chart-description">Interactive network visualization with physics simulation (drag nodes!)</p>
+            <div #forceGraphContainer class="d3-container"></div>
+            <div class="code-actions">
+                <button mat-stroked-button (click)="copyCode(forceGraphHtml, 'HTML')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> HTML
+                </button>
+                <button mat-stroked-button (click)="copyCode(forceGraphTs, 'TypeScript')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> TypeScript
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. Sunburst -->
+        <div class="chart-card">
+            <h3>Zoomable Sunburst</h3>
+            <p class="chart-description">Hierarchical data distribution</p>
+            <div #sunburstContainer class="d3-container"></div>
+            <div class="code-actions">
+                <button mat-stroked-button (click)="copyCode(sunburstHtml, 'HTML')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> HTML
+                </button>
+                <button mat-stroked-button (click)="copyCode(sunburstTs, 'TypeScript')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> TypeScript
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. Tree -->
+        <div class="chart-card">
+            <h3>Hierarchical Tree</h3>
+            <p class="chart-description">Dendrogram layout structure</p>
+            <div #treeContainer class="d3-container"></div>
+            <div class="code-actions">
+                <button mat-stroked-button (click)="copyCode(treeHtml, 'HTML')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> HTML
+                </button>
+                <button mat-stroked-button (click)="copyCode(treeTs, 'TypeScript')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> TypeScript
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

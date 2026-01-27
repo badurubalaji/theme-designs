@@ -1,0 +1,38 @@
+<div class="showcase-container">
+    <div class="showcase-header">
+        <h1>Tree</h1>
+        <p class="description">Trees display hierarchical data.
+            <a href="https://material.angular.dev/components/tree" target="_blank">Official docs</a>
+        </p>
+    </div>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Flat Tree</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="demo-tree">
+                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                        <button mat-icon-button disabled></button>
+                        {{node.name}}
+                    </mat-tree-node>
+                    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                        <button mat-icon-button matTreeNodeToggle>
+                            <mat-icon>{{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}</mat-icon>
+                        </button>
+                        {{node.name}}
+                    </mat-tree-node>
+                </mat-tree>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['basic'], 'Tree')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <mat-expansion-panel class="code-panel">
+        <mat-expansion-panel-header><mat-panel-title><mat-icon>code</mat-icon> View
+                Code</mat-panel-title></mat-expansion-panel-header>
+        <pre><code>{{codes['basic']}}</code></pre>
+    </mat-expansion-panel>
+</div>

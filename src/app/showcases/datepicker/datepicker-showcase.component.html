@@ -1,0 +1,54 @@
+<div class="showcase-container">
+    <div class="showcase-header">
+        <h1>Datepicker</h1>
+        <p class="description">Datepickers allow users to select a date.
+            <a href="https://material.angular.dev/components/datepicker" target="_blank">Official docs</a>
+        </p>
+    </div>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Basic Datepicker</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <mat-form-field appearance="outline" class="example-field">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <p class="selected-value" *ngIf="selectedDate">Selected: {{selectedDate | date}}</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['basic'], 'Basic')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Date Range Picker</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <mat-form-field appearance="outline" class="example-field">
+                    <mat-label>Date range</mat-label>
+                    <mat-date-range-input [rangePicker]="rangePicker">
+                        <input matStartDate placeholder="Start date">
+                        <input matEndDate placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #rangePicker></mat-date-range-picker>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['range'], 'Range')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <mat-expansion-panel class="code-panel">
+        <mat-expansion-panel-header><mat-panel-title><mat-icon>code</mat-icon> View
+                Code</mat-panel-title></mat-expansion-panel-header>
+        <pre><code>{{codes['basic']}}</code></pre>
+    </mat-expansion-panel>
+</div>

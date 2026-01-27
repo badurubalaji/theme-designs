@@ -1,0 +1,26 @@
+@use '../autocomplete/autocomplete-showcase.component.scss' as base;
+
+.checkbox-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+}
+
+.state-display {
+    margin-top: 16px;
+    font-size: 0.875rem;
+    color: var(--mat-sys-on-surface-variant);
+}
+
+.nested-checkboxes {
+    .subtasks {
+        list-style: none;
+        padding-left: 32px;
+        margin: 8px 0 0;
+
+        li {
+            margin: 4px 0;
+        }
+    }
+}

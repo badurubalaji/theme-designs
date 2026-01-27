@@ -1,0 +1,55 @@
+<div class="showcase-container">
+    <div class="showcase-header">
+        <h1>Tooltip</h1>
+        <p class="description">Tooltips display informative text when users hover over, focus on, or tap an element.
+            <a href="https://material.angular.dev/components/tooltip" target="_blank">Official docs</a>
+        </p>
+    </div>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Basic Tooltip</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="button-row">
+                    <button mat-raised-button matTooltip="This is a basic tooltip">Hover me</button>
+                    <button mat-icon-button matTooltip="Delete item" color="warn"><mat-icon>delete</mat-icon></button>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['basic'], 'Basic')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <section class="example-section">
+        <mat-card class="example-card">
+            <mat-card-header><mat-card-title>Tooltip Positions</mat-card-title></mat-card-header>
+            <mat-card-content>
+                <div class="button-row">
+                    <button mat-stroked-button matTooltip="Shown above" matTooltipPosition="above">Above</button>
+                    <button mat-stroked-button matTooltip="Shown below" matTooltipPosition="below">Below</button>
+                    <button mat-stroked-button matTooltip="Shown left" matTooltipPosition="left">Left</button>
+                    <button mat-stroked-button matTooltip="Shown right" matTooltipPosition="right">Right</button>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary"
+                    (click)="copyCode(codes['positions'], 'Positions')"><mat-icon>content_copy</mat-icon> Copy</button>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+
+    <mat-expansion-panel class="code-panel">
+        <mat-expansion-panel-header><mat-panel-title><mat-icon>code</mat-icon> View
+                Code</mat-panel-title></mat-expansion-panel-header>
+        <mat-tab-group>
+            <mat-tab label="Basic">
+                <pre><code>{{codes['basic']}}</code></pre>
+            </mat-tab>
+            <mat-tab label="Positions">
+                <pre><code>{{codes['positions']}}</code></pre>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-expansion-panel>
+</div>

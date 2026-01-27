@@ -1,0 +1,165 @@
+// ============================================================================
+// Custom Design Tokens for Theme Variants
+// Extends Angular Material's system variables with design-specific tokens
+// ============================================================================
+
+@use 'sass:map';
+
+// =============================================================================
+// Elevation & Shadow Tokens
+// Override standard Material shadows for different design aesthetics
+// =============================================================================
+
+/// Neumorphism shadow configuration
+$neumorphism-tokens: (
+    // Light source shadows (top-left)
+    shadow-light: rgba(255, 255, 255, 0.8),
+    shadow-dark: rgba(0, 0, 0, 0.15),
+    // Shadow distance and blur
+    shadow-distance-sm: 4px,
+    shadow-distance-md: 8px,
+    shadow-distance-lg: 16px,
+    shadow-blur-sm: 8px,
+    shadow-blur-md: 16px,
+    shadow-blur-lg: 32px,
+    // Inset shadows for pressed states
+    inset-light: rgba(255, 255, 255, 0.5),
+    inset-dark: rgba(0, 0, 0, 0.1),
+);
+
+/// Glassmorphism effect configuration
+$glassmorphism-tokens: (
+    // Blur amounts
+    blur-xs: 4px,
+    blur-sm: 8px,
+    blur-md: 16px,
+    blur-lg: 24px,
+    blur-xl: 40px,
+    // Background opacity levels
+    opacity-light: 0.75,
+    opacity-medium: 0.6,
+    opacity-heavy: 0.85,
+    // Border
+    border-color: rgba(255, 255, 255, 0.2),
+    border-width: 1px,
+    // Saturation boost
+    saturation: 1.2,
+);
+
+/// Crystal design configuration
+$crystal-tokens: (
+    // Refraction effect gradients
+    refraction-angle: 135deg,
+    refraction-opacity-start: 0.35,
+    refraction-opacity-end: 0,
+    // Surface transparency
+    transparency-primary: 0.9,
+    transparency-secondary: 0.75,
+    // Edge highlight
+    edge-light: rgba(255, 255, 255, 0.5),
+    edge-shadow: rgba(0, 0, 0, 0.1),
+    // Prismatic highlights
+    prism-color-1: rgba(255, 220, 255, 0.15),
+    prism-color-2: rgba(220, 255, 255, 0.15),
+);
+
+/// Flat design configuration  
+$flat-tokens: (
+    // Border configuration (used instead of shadows)
+    border-width-sm: 1px,
+    border-width-md: 2px,
+    border-width-lg: 3px,
+    // Color contrast multipliers
+    hover-darken: 8%,
+    active-darken: 12%,
+    disabled-opacity: 0.5,
+);
+
+/// Minimal design configuration
+$minimal-tokens: (
+    // Spacing multipliers
+    spacing-multiplier: 1.5,
+    padding-base: 24px,
+    // Border
+    border-color: rgba(0, 0, 0, 0.08),
+    border-width: 1px,
+    // Typography emphasis
+    text-weight-emphasis: 500,
+    // Muted colors
+    muted-opacity: 0.6,
+    accent-intensity: 0.8,
+);
+
+// =============================================================================
+// Shape Tokens - Border Radius Per Design Style
+// =============================================================================
+
+$shape-tokens: (
+    material: (corner-xs: 4px,
+        corner-sm: 8px,
+        corner-md: 12px,
+        corner-lg: 16px,
+        corner-xl: 28px,
+        corner-full: 9999px,
+    ),
+    neumorphism: (corner-xs: 8px,
+        corner-sm: 12px,
+        corner-md: 20px,
+        corner-lg: 28px,
+        corner-xl: 40px,
+        corner-full: 9999px,
+    ),
+    glassmorphism: (corner-xs: 8px,
+        corner-sm: 12px,
+        corner-md: 16px,
+        corner-lg: 24px,
+        corner-xl: 32px,
+        corner-full: 9999px,
+    ),
+    crystal: (corner-xs: 2px,
+        corner-sm: 4px,
+        corner-md: 6px,
+        corner-lg: 8px,
+        corner-xl: 12px,
+        corner-full: 9999px,
+    ),
+    flat: (corner-xs: 0px,
+        corner-sm: 2px,
+        corner-md: 4px,
+        corner-lg: 6px,
+        corner-xl: 8px,
+        corner-full: 9999px,
+    ),
+    minimal: (corner-xs: 2px,
+        corner-sm: 4px,
+        corner-md: 8px,
+        corner-lg: 12px,
+        corner-xl: 16px,
+        corner-full: 9999px,
+    ),
+);
+
+// =============================================================================
+// Helper Functions
+// =============================================================================
+
+/// Get a token from a design token map
+@function get-token($map, $key) {
+    @if map.has-key($map, $key) {
+        @return map.get($map, $key);
+    }
+
+    @warn "Token '#{$key}' not found in map";
+    @return null;
+}
+
+/// Get shape tokens for a specific design style
+@function get-shape($style, $size) {
+    $style-shapes: map.get($shape-tokens, $style);
+
+    @if $style-shapes {
+        @return map.get($style-shapes, $size);
+    }
+
+    @return map.get(map.get($shape-tokens, material), $size);
+}
