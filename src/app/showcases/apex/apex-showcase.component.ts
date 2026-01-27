@@ -26,6 +26,8 @@ export class ApexShowcaseComponent implements OnDestroy {
     public timelineOptions: Partial<ApexOptions> = {};
     public bubbleOptions: Partial<ApexOptions> = {};
     public mixedOptions: Partial<ApexOptions> = {};
+    public barOptions: Partial<ApexOptions> = {};
+    public pieOptions: Partial<ApexOptions> = {};
 
     constructor(private snackBar: MatSnackBar, private themeService: ThemeService) {
         this.themeSubscription = this.themeService.activeTheme$.subscribe(theme => {
@@ -198,6 +200,36 @@ export class ApexShowcaseComponent implements OnDestroy {
             ],
             colors: [colors.chartColors[0], colors.chartColors[3], colors.chartColors[2]]
         };
+
+        // 9. Bar Chart - Weekly Recovered Files
+        this.barOptions = {
+            ...commonOptions,
+            series: [{ name: 'Net Profit', data: [44, 55, 57, 56, 61, 58, 63, 60, 66] }],
+            chart: { type: 'bar', height: 350, background: 'transparent' },
+            plotOptions: {
+                bar: { horizontal: false, columnWidth: '55%', borderRadius: 10 }
+            },
+            dataLabels: { enabled: false },
+            stroke: { show: true, width: 2, colors: ['transparent'] },
+            xaxis: { categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'], labels: { style: { colors: colors.text } } },
+            yaxis: { title: { text: '$ (thousands)' }, labels: { style: { colors: colors.text } } },
+            fill: { opacity: 1 },
+            colors: [colors.primary]
+        };
+
+        // 10. Pie Chart - File Type Distribution
+        this.pieOptions = {
+            series: [44, 55, 13, 43, 22],
+            chart: { width: 380, type: 'pie', background: 'transparent' },
+            labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+            colors: colors.chartColors,
+            legend: { labels: { colors: colors.text } },
+            dataLabels: { enabled: true, style: { colors: ['#fff'] } },
+            responsive: [{
+                breakpoint: 480,
+                options: { chart: { width: 200 }, legend: { position: 'bottom' } }
+            }]
+        };
     }
 
     generateData(count: number, yrange: { min: number, max: number }) {
@@ -269,6 +301,17 @@ this.radialBarOptions = {
     mixedTs = `this.mixedOptions = {
     series: [{ type: 'column' }, { type: 'area' }, { type: 'line' }],
     yaxis: [{ title: 'Speed' }, { title: 'Errors' }]
+};`;
+
+    barHtml = `<apx-chart [series]="barOptions.series" [chart]="barOptions.chart" ...></apx-chart>`;
+    barTs = `this.barOptions = {
+    chart: { type: 'bar' },
+    plotOptions: { bar: { borderRadius: 10 } }
+};`;
+
+    pieHtml = `<apx-chart [series]="pieOptions.series" [chart]="pieOptions.chart" ...></apx-chart>`;
+    pieTs = `this.pieOptions = {
+    chart: { type: 'pie' }
 };`;
 
     copyCode(code: string, type: string) {

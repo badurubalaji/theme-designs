@@ -123,5 +123,45 @@
                 </button>
             </div>
         </div>
+        <!-- 9. Bar Chart -->
+        <div class="chart-card">
+            <h3>Revenue Bar Chart</h3>
+            <p class="chart-description">Standard grouped bar chart with rounded corners</p>
+            <div class="chart-container">
+                <apx-chart [series]="barOptions.series!" [chart]="barOptions.chart!"
+                    [dataLabels]="barOptions.dataLabels!" [plotOptions]="barOptions.plotOptions!"
+                    [yaxis]="barOptions.yaxis!" [legend]="barOptions.legend!" [fill]="barOptions.fill!"
+                    [stroke]="barOptions.stroke!" [tooltip]="barOptions.tooltip!" [xaxis]="barOptions.xaxis!"
+                    [colors]="barOptions.colors!">
+                </apx-chart>
+            </div>
+            <div class="code-actions">
+                <button mat-stroked-button (click)="copyCode(barHtml, 'HTML')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> HTML
+                </button>
+                <button mat-stroked-button (click)="copyCode(barTs, 'TypeScript')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> TypeScript
+                </button>
+            </div>
+        </div>
+
+        <!-- 10. Pie Chart -->
+        <div class="chart-card">
+            <h3>Simple Pie Chart</h3>
+            <p class="chart-description">Basic data distribution visualization</p>
+            <div class="chart-container">
+                <apx-chart [series]="pieOptions.series!" [chart]="pieOptions.chart!" [labels]="pieOptions.labels!"
+                    [responsive]="pieOptions.responsive!" [colors]="pieOptions.colors!" [legend]="pieOptions.legend!">
+                </apx-chart>
+            </div>
+            <div class="code-actions">
+                <button mat-stroked-button (click)="copyCode(pieHtml, 'HTML')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> HTML
+                </button>
+                <button mat-stroked-button (click)="copyCode(pieTs, 'TypeScript')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> TypeScript
+                </button>
+            </div>
+        </div>
     </div>
 </div>
