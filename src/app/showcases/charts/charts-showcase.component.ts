@@ -116,39 +116,74 @@ export class ChartsShowcaseComponent implements OnInit, OnDestroy {
                 textStyle: { color: textColor }
             },
             legend: { orient: 'vertical', left: 'left', textStyle: { color: textColor } },
-            series: [{
-                name: 'Traffic Source',
-                type: 'pie',
-                radius: ['40%', '70%'],
-                center: ['60%', '50%'],
-                avoidLabelOverlap: false,
-                itemStyle: {
-                    borderRadius: 10,
-                    borderColor: colors.background, // Match container bg for spacing
-                    borderWidth: 2,
-                    // NEUMORPHISM SPECIFIC FIX: Add shadows for depth
-                    shadowBlur: isNeumorphic ? 10 : 0,
-                    shadowOffsetX: isNeumorphic ? 5 : 0,
-                    shadowOffsetY: isNeumorphic ? 5 : 0,
-                    shadowColor: isNeumorphic ? 'rgba(0,0,0,0.2)' : 'transparent'
-                },
-                label: { show: false, position: 'center' },
-                emphasis: {
-                    label: { show: true, fontSize: 16, fontWeight: 'bold', color: textColor },
+            series: [
+                // Background "Track" Ring for Neumorphism
+                {
+                    type: 'pie',
+                    radius: ['34%', '76%'], // Slightly larger than main pie
+                    center: ['60%', '50%'],
+                    silent: true,
                     itemStyle: {
-                        shadowBlur: 15,
-                        shadowColor: colors.primary
-                    }
+                        color: isNeumorphic ? colors.background : 'transparent',
+                        borderColor: isNeumorphic ? colors.primary : 'transparent',
+                        borderWidth: 0,
+                        shadowBlur: isNeumorphic ? 15 : 0,
+                        shadowOffsetX: isNeumorphic ? 5 : 0,
+                        shadowOffsetY: isNeumorphic ? 5 : 0,
+                        shadowColor: isNeumorphic ? 'rgba(255,255,255,1)' : 'transparent' // Light highlight (outer)
+                    },
+                    data: [{ value: 1 }],
+                    z: 0
                 },
-                labelLine: { show: false },
-                data: [
-                    { value: 1048, name: 'Search', itemStyle: { color: colors.chartColors[0] } },
-                    { value: 735, name: 'Direct', itemStyle: { color: colors.chartColors[1] } },
-                    { value: 580, name: 'Email', itemStyle: { color: colors.chartColors[2] } },
-                    { value: 484, name: 'Union Ads', itemStyle: { color: colors.chartColors[3] } },
-                    { value: 300, name: 'Video Ads', itemStyle: { color: colors.chartColors[4] } }
-                ]
-            }]
+                // Inner Shadow Ring (simulated with another ring)
+                {
+                    type: 'pie',
+                    radius: ['34%', '76%'],
+                    center: ['60%', '50%'],
+                    silent: true,
+                    itemStyle: {
+                        color: 'transparent',
+                        shadowBlur: isNeumorphic ? 15 : 0,
+                        shadowOffsetX: isNeumorphic ? -5 : 0,
+                        shadowOffsetY: isNeumorphic ? -5 : 0,
+                        shadowColor: isNeumorphic ? 'rgba(0,0,0,0.2)' : 'transparent' // Dark shadow (inner)
+                    },
+                    data: [{ value: 1 }],
+                    z: 1
+                },
+                // Actual Data Pie
+                {
+                    name: 'Traffic Source',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    center: ['60%', '50%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: colors.background,
+                        borderWidth: 3,
+                        shadowBlur: isNeumorphic ? 5 : 0,
+                        shadowColor: isNeumorphic ? 'rgba(0,0,0,0.3)' : 'transparent'
+                    },
+                    label: { show: false, position: 'center' },
+                    emphasis: {
+                        label: { show: true, fontSize: 18, fontWeight: 'bold', color: textColor },
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
+                    labelLine: { show: false },
+                    data: [
+                        { value: 1048, name: 'Search', itemStyle: { color: colors.chartColors[0] } },
+                        { value: 735, name: 'Direct', itemStyle: { color: colors.chartColors[1] } },
+                        { value: 580, name: 'Email', itemStyle: { color: colors.chartColors[2] } },
+                        { value: 484, name: 'Union Ads', itemStyle: { color: colors.chartColors[3] } },
+                        { value: 300, name: 'Video Ads', itemStyle: { color: colors.chartColors[4] } }
+                    ],
+                    z: 2
+                }]
         };
 
         // 2. Bar Chart
