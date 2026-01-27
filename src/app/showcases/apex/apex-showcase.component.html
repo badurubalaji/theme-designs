@@ -63,5 +63,65 @@
                 </button>
             </div>
         </div>
+        <!-- 6. Timeline (Recovery Sessions) -->
+        <div class="chart-card chart-card-wide">
+            <h3>Recovery Sessions Timeline</h3>
+            <p class="chart-description">Duration and overlap of recovery tasks</p>
+            <div class="chart-container">
+                <apx-chart [series]="timelineOptions.series!" [chart]="timelineOptions.chart!"
+                    [xaxis]="timelineOptions.xaxis!" [yaxis]="timelineOptions.yaxis!"
+                    [plotOptions]="timelineOptions.plotOptions!" [colors]="timelineOptions.colors!">
+                </apx-chart>
+            </div>
+            <div class="code-actions">
+                <button mat-stroked-button (click)="copyCode(timelineHtml, 'HTML')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> HTML
+                </button>
+                <button mat-stroked-button (click)="copyCode(timelineTs, 'TypeScript')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> TypeScript
+                </button>
+            </div>
+        </div>
+
+        <!-- 7. Bubble Chart (File Integrity) -->
+        <div class="chart-card">
+            <h3>File Integrity Risk</h3>
+            <p class="chart-description">Size vs Risk Factor vs Count</p>
+            <div class="chart-container">
+                <apx-chart [series]="bubbleOptions.series!" [chart]="bubbleOptions.chart!"
+                    [xaxis]="bubbleOptions.xaxis!" [yaxis]="bubbleOptions.yaxis!"
+                    [dataLabels]="bubbleOptions.dataLabels!" [fill]="bubbleOptions.fill!"
+                    [colors]="bubbleOptions.colors!">
+                </apx-chart>
+            </div>
+            <div class="code-actions">
+                <button mat-stroked-button (click)="copyCode(bubbleHtml, 'HTML')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> HTML
+                </button>
+                <button mat-stroked-button (click)="copyCode(bubbleTs, 'TypeScript')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> TypeScript
+                </button>
+            </div>
+        </div>
+
+        <!-- 8. Mixed Chart (Speed vs Errors) -->
+        <div class="chart-card chart-card-wide">
+            <h3>Recovery Speed vs Health</h3>
+            <p class="chart-description">Multi-metric analysis of recovery performance</p>
+            <div class="chart-container">
+                <apx-chart [series]="mixedOptions.series!" [chart]="mixedOptions.chart!" [xaxis]="mixedOptions.xaxis!"
+                    [yaxis]="mixedOptions.yaxis!" [plotOptions]="mixedOptions.plotOptions!" [fill]="mixedOptions.fill!"
+                    [stroke]="mixedOptions.stroke!" [colors]="mixedOptions.colors!">
+                </apx-chart>
+            </div>
+            <div class="code-actions">
+                <button mat-stroked-button (click)="copyCode(mixedHtml, 'HTML')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> HTML
+                </button>
+                <button mat-stroked-button (click)="copyCode(mixedTs, 'TypeScript')" class="copy-btn">
+                    <mat-icon>content_copy</mat-icon> TypeScript
+                </button>
+            </div>
+        </div>
     </div>
 </div>

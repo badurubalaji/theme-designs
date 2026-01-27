@@ -23,6 +23,9 @@ export class ApexShowcaseComponent implements OnDestroy {
     public areaOptions: Partial<ApexOptions> = {};
     public heatmapOptions: Partial<ApexOptions> = {};
     public scatterOptions: Partial<ApexOptions> = {};
+    public timelineOptions: Partial<ApexOptions> = {};
+    public bubbleOptions: Partial<ApexOptions> = {};
+    public mixedOptions: Partial<ApexOptions> = {};
 
     constructor(private snackBar: MatSnackBar, private themeService: ThemeService) {
         this.themeSubscription = this.themeService.activeTheme$.subscribe(theme => {
@@ -138,6 +141,63 @@ export class ApexShowcaseComponent implements OnDestroy {
             yaxis: { tickAmount: 7, labels: { style: { colors: colors.text } } },
             colors: [colors.secondary, colors.chartColors[4]]
         };
+
+        // 6. Timeline (Range Bar) - Recovery Sessions
+        this.timelineOptions = {
+            ...commonOptions,
+            series: [
+                {
+                    data: [
+                        { x: 'Disk A Scan', y: [new Date('2023-01-01T08:00:00').getTime(), new Date('2023-01-01T10:30:00').getTime()] },
+                        { x: 'Partition Recovery', y: [new Date('2023-01-01T11:00:00').getTime(), new Date('2023-01-01T14:00:00').getTime()] },
+                        { x: 'File Extraction', y: [new Date('2023-01-01T13:00:00').getTime(), new Date('2023-01-01T16:00:00').getTime()] },
+                        { x: 'Integrity Check', y: [new Date('2023-01-01T16:30:00').getTime(), new Date('2023-01-01T18:00:00').getTime()] }
+                    ]
+                }
+            ],
+            chart: { type: 'rangeBar', height: 350, background: 'transparent' },
+            plotOptions: { bar: { horizontal: true } },
+            xaxis: { type: 'datetime', labels: { style: { colors: colors.text } } },
+            yaxis: { labels: { style: { colors: colors.text } } },
+            colors: [colors.chartColors[0]]
+        };
+
+        // 7. Bubble Chart - File Integrity Analysis
+        this.bubbleOptions = {
+            ...commonOptions,
+            series: [
+                { name: 'System Files', data: [[10, 20, 30], [20, 40, 10], [30, 10, 45], [40, 30, 15]] },
+                { name: 'User Data', data: [[15, 25, 20], [25, 15, 35], [35, 35, 25], [45, 20, 40]] },
+                { name: 'Corrupted', data: [[20, 30, 50], [30, 50, 60]] }
+            ],
+            chart: { type: 'bubble', height: 350, background: 'transparent' },
+            dataLabels: { enabled: false },
+            fill: { opacity: 0.8 },
+            xaxis: { tickAmount: 5, labels: { style: { colors: colors.text } }, title: { text: 'File Size (MB)', style: { color: colors.text } } },
+            yaxis: { max: 70, labels: { style: { colors: colors.text } }, title: { text: 'Risk Factor', style: { color: colors.text } } },
+            colors: [colors.chartColors[0], colors.chartColors[2], colors.chartColors[3]]
+        };
+
+        // 8. Mixed Chart - Recovery Speed vs Errors
+        this.mixedOptions = {
+            ...commonOptions,
+            series: [
+                { name: 'Transfer Speed (MB/s)', type: 'column', data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30] },
+                { name: 'Errors Detected', type: 'area', data: [4, 5, 2, 8, 3, 2, 0, 1, 6, 2, 4] },
+                { name: 'Overall Health', type: 'line', data: [80, 85, 90, 70, 85, 90, 95, 92, 75, 88, 85] }
+            ],
+            chart: { type: 'line', height: 350, stacked: false, background: 'transparent' },
+            stroke: { width: [0, 2, 5], curve: 'smooth' },
+            plotOptions: { bar: { columnWidth: '50%' } },
+            fill: { opacity: [0.85, 0.25, 1], gradient: { inverseColors: false, shade: 'light', type: 'vertical', opacityFrom: 0.85, opacityTo: 0.55, stops: [0, 100, 100, 100] } },
+            xaxis: { categories: ['10m', '20m', '30m', '40m', '50m', '60m', '70m', '80m', '90m', '100m', '110m'], labels: { style: { colors: colors.text } } },
+            yaxis: [
+                { seriesName: 'Transfer Speed', axisTicks: { show: true }, axisBorder: { show: true, color: colors.chartColors[0] }, labels: { style: { colors: colors.chartColors[0] } }, title: { text: 'Speed (MB/s)', style: { color: colors.chartColors[0] } } },
+                { seriesName: 'Errors', show: false },
+                { opposite: true, seriesName: 'Overall Health', axisTicks: { show: true }, axisBorder: { show: true, color: colors.chartColors[2] }, labels: { style: { colors: colors.chartColors[2] } }, title: { text: 'Health Score', style: { color: colors.chartColors[2] } } }
+            ],
+            colors: [colors.chartColors[0], colors.chartColors[3], colors.chartColors[2]]
+        };
     }
 
     generateData(count: number, yrange: { min: number, max: number }) {
@@ -190,6 +250,25 @@ this.radialBarOptions = {
     scatterTs = `this.scatterOptions = {
   chart: { type: 'scatter', zoom: { enabled: true } },
   colors: [colors.secondary, colors.accent]
+};`;
+
+    timelineHtml = `<apx-chart [series]="timelineOptions.series" [chart]="timelineOptions.chart" ...></apx-chart>`;
+    timelineTs = `this.timelineOptions = {
+    chart: { type: 'rangeBar' },
+    plotOptions: { bar: { horizontal: true } }
+};`;
+
+    bubbleHtml = `<apx-chart [series]="bubbleOptions.series" [chart]="bubbleOptions.chart" ...></apx-chart>`;
+    bubbleTs = `this.bubbleOptions = {
+    chart: { type: 'bubble' },
+    xaxis: { title: { text: 'File Size' } },
+    yaxis: { title: { text: 'Risk' } }
+};`;
+
+    mixedHtml = `<apx-chart [series]="mixedOptions.series" [chart]="mixedOptions.chart" ...></apx-chart>`;
+    mixedTs = `this.mixedOptions = {
+    series: [{ type: 'column' }, { type: 'area' }, { type: 'line' }],
+    yaxis: [{ title: 'Speed' }, { title: 'Errors' }]
 };`;
 
     copyCode(code: string, type: string) {
