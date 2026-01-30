@@ -90,6 +90,35 @@ $minimal-tokens: (
     accent-intensity: 0.8,
 );
 
+/// Futuristic design configuration - Cyberpunk aesthetic
+$futuristic-tokens: (
+    // Neon color palette
+    neon-cyan: #00f3ff,
+    neon-magenta: #ff00ff,
+    neon-blue: #0088ff,
+    neon-green: #00ff88,
+    neon-red: #ff3366,
+    neon-amber: #ffaa00,
+    neon-purple: #9d4edd,
+    // Background colors
+    deep-void: #050a10,
+    tech-surface: #0a1018,
+    tech-panel: #0f1824,
+    tech-container: #141f2e,
+    // Glow effects
+    glow-blur-sm: 8px,
+    glow-blur-md: 16px,
+    glow-blur-lg: 24px,
+    glow-blur-xl: 40px,
+    // Grid configuration
+    grid-color: rgba(0, 243, 255, 0.08),
+    grid-size: 50px,
+    // Animation timings
+    transition-fast: 0.15s,
+    transition-normal: 0.25s,
+    transition-slow: 0.4s,
+);
+
 // =============================================================================
 // Shape Tokens - Border Radius Per Design Style
 // =============================================================================
@@ -131,6 +160,13 @@ $shape-tokens: (
         corner-full: 9999px,
     ),
     minimal: (corner-xs: 2px,
+        corner-sm: 4px,
+        corner-md: 8px,
+        corner-lg: 12px,
+        corner-xl: 16px,
+        corner-full: 9999px,
+    ),
+    futuristic: (corner-xs: 2px,
         corner-sm: 4px,
         corner-md: 8px,
         corner-lg: 12px,
